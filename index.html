@@ -44,6 +44,50 @@ body{
     border-radius:10px;
 }
 
+/* ADD BELOW HERE */
+
+.about-shiva{
+
+    width:100%;
+
+    max-width:500px;
+
+    display:block;
+
+    margin:auto;
+
+    border-radius:30px;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
+
+    transition:0.4s;
+
+    animation:floatImage 5s ease-in-out infinite;
+}
+
+.about-shiva:hover{
+
+    transform:scale(1.02);
+}
+
+/* FLOAT EFFECT */
+
+@keyframes floatImage{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}    
 /* HERO */
 
 .hero{
