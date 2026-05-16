@@ -44,50 +44,168 @@ body{
     border-radius:10px;
 }
 
-/* ADD BELOW HERE */
+/* TEMPLE ENTRANCE */
 
-.about-shiva{
+#templeEntrance{
+
+    position:fixed;
+
+    top:0;
+    left:0;
 
     width:100%;
+    height:100vh;
 
-    max-width:500px;
+    background:black;
 
-    display:block;
+    z-index:99999;
 
-    margin:auto;
+    overflow:hidden;
 
-    border-radius:30px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* DOORS */
+
+.door{
+
+    position:absolute;
+
+    top:0;
+
+    width:50%;
+    height:100%;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2b1a00,
+    #5c3b00,
+    #2b1a00
+    );
+
+    transition:2s ease-in-out;
 
     box-shadow:
-    0 20px 60px rgba(0,0,0,0.45);
-
-    transition:0.4s;
-
-    animation:floatImage 5s ease-in-out infinite;
+    inset 0 0 50px rgba(0,0,0,0.8);
 }
 
-.about-shiva:hover{
+.left-door{
 
-    transform:scale(1.02);
+    left:0;
+
+    border-right:
+    3px solid #d4a74f;
 }
 
-/* FLOAT EFFECT */
+.right-door{
 
-@keyframes floatImage{
+    right:0;
+
+    border-left:
+    3px solid #d4a74f;
+}
+
+/* ENTRANCE CONTENT */
+
+.entrance-content{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    color:white;
+}
+
+.om-symbol{
+
+    font-size:120px;
+
+    color:#f0c56f;
+
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
 
     0%{
-        transform:translateY(0px);
+        transform:scale(1);
     }
 
     50%{
-        transform:translateY(-10px);
+        transform:scale(1.08);
     }
 
     100%{
-        transform:translateY(0px);
+        transform:scale(1);
     }
 
-}    
+}
+
+.entrance-content h1{
+
+    margin-top:20px;
+
+    font-size:50px;
+
+    color:#f0c56f;
+}
+
+.entrance-content p{
+
+    margin-top:15px;
+
+    color:#ddd;
+
+    font-size:18px;
+}
+
+.entrance-content button{
+
+    margin-top:35px;
+
+    padding:16px 40px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:#d4a74f;
+
+    color:black;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.entrance-content button:hover{
+
+    transform:scale(1.05);
+}
+
+/* OPEN EFFECT */
+
+.open-left{
+
+    transform:
+    translateX(-100%);
+}
+
+.open-right{
+
+    transform:
+    translateX(100%);
+}
+
 /* HERO */
 
 .hero{
@@ -182,6 +300,51 @@ nav ul li a:hover{
     padding:20px;
 }
 
+/* SHIVA IMAGE */
+
+.about-shiva{
+
+    width:100%;
+
+    max-width:500px;
+
+    display:block;
+
+    margin:auto;
+
+    border-radius:30px;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
+
+    transition:0.4s;
+
+    animation:floatImage 5s ease-in-out infinite;
+}
+
+.about-shiva:hover{
+
+    transform:scale(1.02);
+}
+
+/* FLOAT EFFECT */
+
+@keyframes floatImage{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
 /* OM */
 
 .om{
@@ -273,35 +436,6 @@ nav ul li a:hover{
     background:rgba(255,255,255,0.12);
 }
 
-/* FLOATING BOXES */
-
-.floating-box{
-    position:absolute;
-
-    background:rgba(255,255,255,0.05);
-
-    backdrop-filter:blur(12px);
-
-    border:
-    1px solid rgba(255,255,255,0.08);
-
-    padding:18px 22px;
-
-    border-radius:20px;
-
-    color:white;
-}
-
-.box1{
-    top:24%;
-    left:5%;
-}
-
-.box2{
-    bottom:15%;
-    right:7%;
-}
-
 /* SECTIONS */
 
 section{
@@ -330,11 +464,6 @@ section{
 
     gap:50px;
     align-items:center;
-}
-
-.about-image img{
-    width:100%;
-    border-radius:30px;
 }
 
 .about-text h3{
@@ -483,9 +612,6 @@ section{
     color:white;
 
     text-align:right;
-
-    text-shadow:
-    0 0 20px rgba(240,197,111,0.35);
 }
 
 /* GALLERY */
@@ -652,10 +778,6 @@ footer{
         font-size:80px;
     }
 
-    .floating-box{
-        display:none;
-    }
-
     .section-title{
         font-size:34px;
     }
@@ -678,6 +800,36 @@ footer{
 </head>
 
 <body>
+
+<!-- TEMPLE ENTRANCE -->
+
+<div id="templeEntrance">
+
+<div class="door left-door"></div>
+
+<div class="door right-door"></div>
+
+<div class="entrance-content">
+
+<div class="om-symbol">
+ॐ
+</div>
+
+<h1>
+🕉 Sri Shivan Alayam
+</h1>
+
+<p>
+Enter the divine spiritual world of Lord Shiva
+</p>
+
+<button onclick="openTemple()">
+Enter Temple
+</button>
+
+</div>
+
+</div>
 
 <!-- HERO -->
 
@@ -711,18 +863,6 @@ type="video/mp4">
 </ul>
 
 </nav>
-
-<!-- FLOATING BOXES -->
-
-<div class="floating-box box1">
-🔱 Daily Abishegam<br>
-7:00 AM
-</div>
-
-<div class="floating-box box2">
-🕉 Maha Shivaratri<br>
-Live Countdown
-</div>
 
 <!-- HERO CONTENT -->
 
@@ -802,9 +942,9 @@ are conducted with devotion and tradition.
 
 <div class="shlokam">
 
-ॐ Om Tryambakam Yajamahe Sugandhim Pushtivardhanam ।<br><br>
+ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् ।<br><br>
 
-Urvarukamiva Bandhanan Mrityor Mukshiya Maamritat ॥
+उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात् ॥
 
 </div>
 
@@ -814,7 +954,7 @@ Urvarukamiva Bandhanan Mrityor Mukshiya Maamritat ॥
 
 </section>
 
-<!-- REAL POOJA TIMETABLE -->
+<!-- POOJA -->
 
 <section id="pooja">
 
@@ -829,58 +969,30 @@ Sacred Shiva poojas conducted daily
 <div class="cards">
 
 <div class="card">
-
-<h3>
-🌅 7:00 AM
-</h3>
-
-<p>
-Temple Opening & Morning Pooja
-</p>
-
+<h3>🌅 7:00 AM</h3>
+<p>Temple Opening & Morning Pooja</p>
 </div>
 
 <div class="card">
-
-<h3>
-🛕 10:00 AM
-</h3>
-
-<p>
-Morning Temple Closing
-</p>
-
+<h3>🛕 10:00 AM</h3>
+<p>Morning Temple Closing</p>
 </div>
 
 <div class="card">
-
-<h3>
-🪔 7:00 PM
-</h3>
-
-<p>
-Evening Deeparathanai & Shiva Pooja
-</p>
-
+<h3>🪔 7:00 PM</h3>
+<p>Evening Deeparathanai & Shiva Pooja</p>
 </div>
 
 <div class="card">
-
-<h3>
-🌙 10:00 PM
-</h3>
-
-<p>
-Temple Closing Time
-</p>
-
+<h3>🌙 10:00 PM</h3>
+<p>Temple Closing Time</p>
 </div>
 
 </div>
 
 </section>
 
-<!-- FESTIVAL COUNTDOWN -->
+<!-- FESTIVAL -->
 
 <section id="festival">
 
@@ -976,12 +1088,12 @@ Loading...
 
 </section>
 
-<!-- REAL TEMPLE GALLERY -->
+<!-- GALLERY -->
 
 <section id="gallery">
 
 <h2 class="section-title">
-Sri Shivan Alayam Gallery
+Temple Gallery
 </h2>
 
 <p class="section-sub">
@@ -1003,7 +1115,7 @@ src="https://images.unsplash.com/photo-1627225924765-552d49cf47ad?q=80&w=1200&au
 
 </section>
 
-<!-- GOOGLE MAP -->
+<!-- MAP -->
 
 <section id="map">
 
@@ -1046,17 +1158,9 @@ Connect with Sri Shivan Alayam
 
 <div class="contact-info">
 
-<p>
-📍 Brickfields, Kuala Lumpur
-</p>
-
-<p>
-📞 +60 12-345 6789
-</p>
-
-<p>
-📧 info@srishivanalayam.com
-</p>
+<p>📍 Brickfields, Kuala Lumpur</p>
+<p>📞 +60 12-345 6789</p>
+<p>📧 info@srishivanalayam.com</p>
 
 </div>
 
@@ -1072,9 +1176,7 @@ placeholder="Email Address">
 placeholder="Prayer Request"></textarea>
 
 <button type="submit">
-
 Send Prayer Request
-
 </button>
 
 </form>
@@ -1102,9 +1204,30 @@ target="_blank">
 
 </a>
 
-<!-- LIVE COUNTDOWN SCRIPT -->
+<!-- SCRIPT -->
 
 <script>
+
+/* TEMPLE ENTRANCE */
+
+function openTemple(){
+
+    document.querySelector(".left-door")
+    .classList.add("open-left");
+
+    document.querySelector(".right-door")
+    .classList.add("open-right");
+
+    setTimeout(()=>{
+
+        document.getElementById(
+        "templeEntrance"
+        ).style.display="none";
+
+    },2000);
+}
+
+/* LIVE COUNTDOWN */
 
 function updateCountdown(id,targetDate){
 
