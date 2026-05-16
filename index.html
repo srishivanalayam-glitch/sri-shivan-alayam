@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sri Shivan Alayam Brickfields</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050505;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#d4a74f;
+    border-radius:10px;
+}
+
+/* HERO */
+
+.hero{
+    height:100vh;
+    position:relative;
+    overflow:hidden;
+}
+
+/* VIDEO */
+
+.hero video{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.88)
+    );
+
+    z-index:-1;
+}
+
+/* NAVBAR */
+
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:999;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:22px 8%;
+
+    background:rgba(0,0,0,0.25);
+    backdrop-filter:blur(18px);
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.08);
+}
+
+.logo{
+    font-size:24px;
+    font-weight:700;
+    color:#f0c56f;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+}
+
+nav ul li{
+    margin-left:35px;
+}
+
+nav ul li a{
+    color:#eee;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+nav ul li a:hover{
+    color:#f0c56f;
+}
+
+/* HERO CONTENT */
+
+.hero-content{
+    height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-direction:column;
+
+    text-align:center;
+
+    padding:20px;
+}
+
+/* OM */
+
+.om{
+    font-size:120px;
+    color:#f0c56f;
+
+    text-shadow:
+    0 0 30px rgba(240,197,111,0.5);
+
+    animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+.hero-content h1{
+    margin-top:10px;
+    font-size:70px;
+    font-weight:800;
+}
+
+.hero-content p{
+    margin-top:25px;
+
+    max-width:850px;
+
+    line-height:2;
+
+    color:#cfcfcf;
+
+    font-size:18px;
+}
+
+/* BUTTONS */
+
+.hero-buttons{
+    margin-top:40px;
+
+    display:flex;
+    gap:20px;
+}
+
+.btn{
+    padding:15px 35px;
+
+    border-radius:50px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.gold-btn{
+    background:#d4a74f;
+    color:black;
+}
+
+.gold-btn:hover{
+    background:#f0c56f;
+}
+
+.glass-btn{
+    background:rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(12px);
+
+    color:white;
+}
+
+.glass-btn:hover{
+    background:rgba(255,255,255,0.12);
+}
+
+/* FLOATING BOXES */
+
+.floating-box{
+    position:absolute;
+
+    background:rgba(255,255,255,0.05);
+
+    backdrop-filter:blur(12px);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    padding:18px 22px;
+
+    border-radius:20px;
+
+    color:white;
+}
+
+.box1{
+    top:24%;
+    left:5%;
+}
+
+.box2{
+    bottom:15%;
+    right:7%;
+}
+
+/* SECTIONS */
+
+section{
+    padding:110px 8%;
+}
+
+.section-title{
+    text-align:center;
+    font-size:48px;
+    color:#f0c56f;
+    margin-bottom:15px;
+}
+
+.section-sub{
+    text-align:center;
+    color:#999;
+    margin-bottom:70px;
+}
+
+/* ABOUT */
+
+.about-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(340px,1fr));
+
+    gap:50px;
+    align-items:center;
+}
+
+.about-image img{
+    width:100%;
+    border-radius:30px;
+}
+
+.about-text h3{
+    font-size:36px;
+    margin-bottom:20px;
+}
+
+.about-text p{
+    line-height:2;
+    color:#c8c8c8;
+}
+
+/* SHLOKAM */
+
+.shlokam{
+    margin-top:35px;
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(212,167,79,0.12),
+    rgba(255,255,255,0.03)
+    );
+
+    border:
+    1px solid rgba(212,167,79,0.15);
+
+    padding:30px;
+
+    border-radius:24px;
+
+    color:#f0c56f;
+
+    line-height:2;
+}
+
+/* POOJA */
+
+.cards{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(260px,1fr));
+
+    gap:25px;
+}
+
+.card{
+    background:
+    linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.02)
+    );
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    padding:35px;
+
+    border-radius:28px;
+
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+
+    border:
+    1px solid rgba(212,167,79,0.3);
+}
+
+.card h3{
+    color:#f0c56f;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#bdbdbd;
+    line-height:1.8;
+}
+
+/* LIVE COUNTDOWN */
+
+.live-countdowns{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:25px;
+
+    max-width:1000px;
+    margin:auto;
+}
+
+.live-card{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:35px;
+
+    border-radius:30px;
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.02)
+    );
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(15px);
+
+    transition:0.3s;
+}
+
+.live-card:hover{
+
+    transform:translateY(-6px);
+
+    border:
+    1px solid rgba(212,167,79,0.35);
+}
+
+.festival-left h3{
+
+    font-size:30px;
+    color:#f0c56f;
+    margin-bottom:10px;
+}
+
+.festival-left p{
+
+    color:#bdbdbd;
+    line-height:1.8;
+}
+
+.live-timer{
+
+    font-size:42px;
+    font-weight:800;
+
+    color:white;
+
+    text-align:right;
+
+    text-shadow:
+    0 0 20px rgba(240,197,111,0.35);
+}
+
+/* GALLERY */
+
+.gallery{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(260px,1fr));
+
+    gap:20px;
+}
+
+.gallery img{
+    width:100%;
+    height:380px;
+
+    object-fit:cover;
+
+    border-radius:25px;
+
+    transition:0.4s;
+}
+
+.gallery img:hover{
+    transform:scale(1.03);
+}
+
+/* CONTACT */
+
+.contact-box{
+    max-width:850px;
+    margin:auto;
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.02)
+    );
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    padding:50px;
+
+    border-radius:30px;
+}
+
+.contact-info{
+    margin-bottom:30px;
+}
+
+.contact-info p{
+    margin-bottom:15px;
+    color:#d0d0d0;
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+input, textarea{
+    background:rgba(255,255,255,0.05);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    padding:18px;
+
+    border-radius:16px;
+
+    color:white;
+
+    outline:none;
+}
+
+button{
+    background:#d4a74f;
+
+    color:black;
+
+    border:none;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+
+    padding:35px;
+
+    border-top:
+    1px solid rgba(255,255,255,0.06);
+
+    color:#888;
+}
+
+/* WHATSAPP */
+
+.whatsapp{
+    position:fixed;
+
+    bottom:25px;
+    right:25px;
+
+    width:68px;
+    height:68px;
+
+    background:#25D366;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+
+    font-size:34px;
+
+    text-decoration:none;
+
+    z-index:999;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    nav ul{
+        display:none;
+    }
+
+    .hero-content h1{
+        font-size:42px;
+    }
+
+    .om{
+        font-size:80px;
+    }
+
+    .floating-box{
+        display:none;
+    }
+
+    .section-title{
+        font-size:34px;
+    }
+
+    .live-card{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:25px;
+    }
+
+    .live-timer{
+        text-align:left;
+        font-size:34px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<header class="hero">
+
+<video autoplay muted loop playsinline>
+
+<source
+src="https://cdn.coverr.co/videos/coverr-burning-candle-1560097906196?download=1080p"
+type="video/mp4">
+
+</video>
+
+<div class="overlay"></div>
+
+<!-- NAVBAR -->
+
+<nav>
+
+<div class="logo">
+🕉 Sri Shivan Alayam
+</div>
+
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#pooja">Pooja</a></li>
+<li><a href="#festival">Festival</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+
+</nav>
+
+<!-- FLOATING BOXES -->
+
+<div class="floating-box box1">
+🔱 Daily Abishegam<br>
+7:00 AM
+</div>
+
+<div class="floating-box box2">
+🕉 Maha Shivaratri<br>
+Live Countdown
+</div>
+
+<!-- HERO CONTENT -->
+
+<div class="hero-content">
+
+<div class="om">
+ॐ
+</div>
+
+<h1>
+ஸ்ரீ சிவன் ஆலயம்
+</h1>
+
+<p>
+Experience divine energy, spiritual peace,
+sacred Shiva poojas and powerful blessings
+at Sri Shivan Alayam Brickfields.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#contact"
+class="btn gold-btn">
+
+Visit Temple
+
+</a>
+
+<a href="#pooja"
+class="btn glass-btn">
+
+Explore Poojas
+
+</a>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+<h2 class="section-title">
+Divine Shiva Experience
+</h2>
+
+<p class="section-sub">
+A sacred spiritual home for devotees
+</p>
+
+<div class="about-grid">
+
+<div class="about-image">
+
+<img
+src="https://images.unsplash.com/photo-1593696954577-ab3d39317b97?q=80&w=1200&auto=format&fit=crop">
+
+</div>
+
+<div class="about-text">
+
+<h3>
+🛕 Om Namah Shivaya
+</h3>
+
+<p>
+Sri Shivan Alayam Brickfields stands as a symbol
+of peace, divine energy and spiritual devotion.
+Daily poojas, Rudra chanting,
+special abishegam and sacred festivals
+are conducted with devotion and tradition.
+</p>
+
+<div class="shlokam">
+
+ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् ।<br><br>
+
+उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात् ॥
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- POOJA -->
+
+<section id="pooja">
+
+<h2 class="section-title">
+Daily Pooja Timetable
+</h2>
+
+<p class="section-sub">
+Sacred poojas and spiritual timings
+</p>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>
+🌅 6:00 AM
+</h3>
+
+<p>
+Suprabatham & Temple Opening
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🛕 7:00 AM
+</h3>
+
+<p>
+Morning Shiva Abishegam
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🔔 12:00 PM
+</h3>
+
+<p>
+Ucchi Kalam Pooja
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+🪔 7:00 PM
+</h3>
+
+<p>
+Evening Deeparathanai
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FESTIVAL COUNTDOWN -->
+
+<section id="festival">
+
+<h2 class="section-title">
+Live Festival Countdowns
+</h2>
+
+<p class="section-sub">
+Upcoming sacred Shiva festivals & spiritual days
+</p>
+
+<div class="live-countdowns">
+
+<!-- MAHA SHIVARATRI -->
+
+<div class="live-card">
+
+<div class="festival-left">
+
+<h3>🕉 Maha Shivaratri</h3>
+
+<p>
+Night of divine Shiva blessings,
+bhajans & abishegam
+</p>
+
+</div>
+
+<div class="festival-right">
+
+<div class="live-timer"
+id="shivaratriTimer">
+
+Loading...
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PRADOSHAM -->
+
+<div class="live-card">
+
+<div class="festival-left">
+
+<h3>🔔 Pradosham</h3>
+
+<p>
+Sacred Shiva pooja day
+for spiritual cleansing
+</p>
+
+</div>
+
+<div class="festival-right">
+
+<div class="live-timer"
+id="pradoshamTimer">
+
+Loading...
+
+</div>
+
+</div>
+
+</div>
+
+<!-- AMAVASAI -->
+
+<div class="live-card">
+
+<div class="festival-left">
+
+<h3>🌑 Amavasai</h3>
+
+<p>
+Special prayers for ancestors
+and divine peace
+</p>
+
+</div>
+
+<div class="festival-right">
+
+<div class="live-timer"
+id="amavasaiTimer">
+
+Loading...
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- GALLERY -->
+
+<section id="gallery">
+
+<h2 class="section-title">
+Temple Gallery
+</h2>
+
+<p class="section-sub">
+Moments of devotion and spirituality
+</p>
+
+<div class="gallery">
+
+<img
+src="https://images.unsplash.com/photo-1627894483216-2138af692e32?q=80&w=1200&auto=format&fit=crop">
+
+<img
+src="https://images.unsplash.com/photo-1604608672516-f1b0d3f2b29b?q=80&w=1200&auto=format&fit=crop">
+
+<img
+src="https://images.unsplash.com/photo-1593696954577-ab3d39317b97?q=80&w=1200&auto=format&fit=crop">
+
+</div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<h2 class="section-title">
+Temple Contact
+</h2>
+
+<p class="section-sub">
+Connect with Sri Shivan Alayam
+</p>
+
+<div class="contact-box">
+
+<div class="contact-info">
+
+<p>
+📍 Brickfields, Kuala Lumpur
+</p>
+
+<p>
+📞 +60 12-345 6789
+</p>
+
+<p>
+📧 info@srishivanalayam.com
+</p>
+
+</div>
+
+<form>
+
+<input type="text"
+placeholder="Your Name">
+
+<input type="email"
+placeholder="Email Address">
+
+<textarea rows="5"
+placeholder="Prayer Request"></textarea>
+
+<button type="submit">
+
+Send Prayer Request
+
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+🕉 Om Namah Shivaya |
+Sri Shivan Alayam Brickfields
+
+</footer>
+
+<!-- WHATSAPP -->
+
+<a href="https://wa.me/60123456789"
+class="whatsapp"
+target="_blank">
+
+<i class="fa-brands fa-whatsapp"></i>
+
+</a>
+
+<!-- LIVE COUNTDOWN SCRIPT -->
+
+<script>
+
+function updateCountdown(id,targetDate){
+
+    const timer =
+    document.getElementById(id);
+
+    function calculate(){
+
+        const now =
+        new Date().getTime();
+
+        const distance =
+        targetDate - now;
+
+        if(distance < 0){
+
+            timer.innerHTML =
+            "Festival Started";
+
+            return;
+        }
+
+        const days =
+        Math.floor(distance /
+        (1000 * 60 * 60 * 24));
+
+        const hours =
+        Math.floor((distance %
+        (1000 * 60 * 60 * 24)) /
+        (1000 * 60 * 60));
+
+        const minutes =
+        Math.floor((distance %
+        (1000 * 60 * 60)) /
+        (1000 * 60));
+
+        const seconds =
+        Math.floor((distance %
+        (1000 * 60)) /
+        1000);
+
+        timer.innerHTML =
+        days + "D : " +
+        hours + "H : " +
+        minutes + "M : " +
+        seconds + "S";
+    }
+
+    calculate();
+
+    setInterval(calculate,1000);
+}
+
+/* FESTIVAL DATES */
+
+const mahaShivaratri =
+new Date("March 6, 2027 00:00:00").getTime();
+
+const pradosham =
+new Date("May 28, 2026 18:00:00").getTime();
+
+const amavasai =
+new Date("May 26, 2026 00:00:00").getTime();
+
+/* START */
+
+updateCountdown(
+"shivaratriTimer",
+mahaShivaratri
+);
+
+updateCountdown(
+"pradoshamTimer",
+pradosham
+);
+
+updateCountdown(
+"amavasaiTimer",
+amavasai
+);
+
+</script>
+
+</body>
+</html>
