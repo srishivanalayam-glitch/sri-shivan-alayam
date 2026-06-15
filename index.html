@@ -766,8 +766,42 @@ footer{
 
 @media(max-width:768px){
 
+    nav{
+
+        flex-direction:column;
+        padding:15px;
+    }
+
+    .logo{
+
+        margin-bottom:10px;
+        font-size:20px;
+    }
+
     nav ul{
-        display:none;
+
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+
+        gap:8px;
+    }
+
+    nav ul li{
+
+        margin-left:0;
+    }
+
+    nav ul li a{
+
+        font-size:13px;
+
+        padding:8px 12px;
+
+        border-radius:20px;
+
+        background:
+        rgba(255,255,255,0.05);
     }
 
     .hero-content h1{
@@ -794,7 +828,6 @@ footer{
     }
 
 }
-
 </style>
 
 </head>
