@@ -1,1352 +1,820 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Shivan Alayam Brickfields — Om Namah Shivaya</title>
 
-<title>Sri Shivan Alayam Brickfields</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',sans-serif;
+:root{
+  --void:#07060a;
+  --panel:#100d0f;
+  --gold:#d4a74f;
+  --gold-bright:#f0c56f;
+  --ember:#a83e1f;
+  --ember-bright:#e2662f;
+  --ash:#8f8579;
+  --smoke:#f3ede1;
+  --line:rgba(243,237,225,0.08);
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 body{
-    background:#050505;
-    color:white;
-    overflow-x:hidden;
+  background:var(--void);
+  color:var(--smoke);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
 
-::-webkit-scrollbar{
-    width:8px;
+.display{
+  font-family:'Big Shoulders Display',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:-0.01em;
+  line-height:0.86;
 }
 
-::-webkit-scrollbar-thumb{
-    background:#d4a74f;
-    border-radius:10px;
+.eyebrow{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:20px;
+  color:var(--gold);
+  letter-spacing:0.04em;
+  margin-bottom:14px;
+  display:block;
 }
 
-/* TEMPLE ENTRANCE */
-
+/* ============ ENTRANCE ============ */
 #templeEntrance{
-
-    position:fixed;
-
-    top:0;
-    left:0;
-
-    width:100%;
-    height:100vh;
-
-    background:black;
-
-    z-index:99999;
-
-    overflow:hidden;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
+  position:fixed; inset:0; z-index:99999;
+  background:#020103;
+  display:flex; justify-content:center; align-items:center;
+  overflow:hidden;
 }
-
-/* DOORS */
-
+.door-scene{
+  position:absolute; inset:0; display:flex; perspective:2000px; perspective-origin:50% 50%;
+}
 .door{
+  position:absolute; top:0; width:50%; height:100%;
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.18) 0 2px, transparent 2px 34px),
+    radial-gradient(circle at 50% 35%, rgba(212,167,79,0.10), transparent 62%),
+    linear-gradient(160deg,#120c08,#2a1a0c 45%,#120c08 100%);
+  transform-style:preserve-3d;
+  transition:transform 2.2s cubic-bezier(.6,-0.05,.2,1), box-shadow 2.2s ease;
+  box-shadow:inset 0 0 60px rgba(0,0,0,0.6);
+}
+.door::before{
+  content:''; position:absolute; inset:18px;
+  border:1px solid rgba(212,167,79,0.35); border-radius:3px;
+  box-shadow:inset 0 0 30px rgba(0,0,0,0.5);
+}
+.door::after{
+  content:''; position:absolute; top:50%; width:16px; height:16px;
+  border-radius:50%; background:radial-gradient(circle at 35% 35%, #f0c56f, #8a6321 70%);
+  box-shadow:0 0 14px rgba(212,167,79,0.6); transform:translateY(-50%);
+}
+.left-door{left:0; transform-origin:left center; border-right:1px solid rgba(212,167,79,0.25);}
+.left-door::after{right:26px;}
+.right-door{right:0; left:auto; transform-origin:right center; border-left:1px solid rgba(212,167,79,0.25);}
+.right-door::after{left:26px;}
+.open-left{transform:rotateY(-112deg); box-shadow:60px 0 100px rgba(0,0,0,0.65);}
+.open-right{transform:rotateY(112deg); box-shadow:-60px 0 100px rgba(0,0,0,0.65);}
 
-    position:absolute;
+.light-beam{
+  position:absolute; top:0; bottom:0; left:50%; transform:translateX(-50%);
+  width:0; opacity:0;
+  background:radial-gradient(ellipse at 50% 45%, rgba(255,236,190,0.9), rgba(240,197,111,0.35) 35%, transparent 70%);
+  filter:blur(6px);
+  transition:width 2s ease, opacity 1.6s ease;
+  pointer-events:none; z-index:1;
+}
+.beam-on{width:220%; opacity:1;}
 
-    top:0;
-
-    width:50%;
-    height:100%;
-
-    background:
-    linear-gradient(
-    135deg,
-    #2b1a00,
-    #5c3b00,
-    #2b1a00
-    );
-
-    transition:2s ease-in-out;
-
-    box-shadow:
-    inset 0 0 50px rgba(0,0,0,0.8);
+.embers{position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1;}
+.ember-particle{
+  position:absolute; bottom:-10px; border-radius:50%;
+  background:radial-gradient(circle, #ffe4a8, #e2662f 70%);
+  box-shadow:0 0 8px rgba(240,197,111,0.8);
+  opacity:0; animation:riseEmber linear forwards;
+}
+@keyframes riseEmber{
+  0%{opacity:0; transform:translateY(0) translateX(0) scale(1);}
+  10%{opacity:1;}
+  90%{opacity:0.7;}
+  100%{opacity:0; transform:translateY(-115vh) translateX(var(--drift,20px)) scale(0.4);}
 }
 
-.left-door{
-
-    left:0;
-
-    border-right:
-    3px solid #d4a74f;
-}
-
-.right-door{
-
-    right:0;
-
-    border-left:
-    3px solid #d4a74f;
-}
-
-/* ENTRANCE CONTENT */
-
-.entrance-content{
-
-    position:relative;
-
-    z-index:2;
-
-    text-align:center;
-
-    color:white;
-}
-
+.entrance-content{position:relative; z-index:2; text-align:center; transition:opacity 0.8s ease, transform 0.8s ease;}
+.entrance-fade{opacity:0; transform:scale(0.92); pointer-events:none;}
 .om-symbol{
-
-    font-size:120px;
-
-    color:#f0c56f;
-
-    animation:pulse 2s infinite;
+  font-size:110px; color:var(--gold-bright);
+  text-shadow:0 0 60px rgba(240,197,111,0.45);
+  animation:breathe 3s ease-in-out infinite;
 }
-
-@keyframes pulse{
-
-    0%{
-        transform:scale(1);
-    }
-
-    50%{
-        transform:scale(1.08);
-    }
-
-    100%{
-        transform:scale(1);
-    }
-
-}
-
-.entrance-content h1{
-
-    margin-top:20px;
-
-    font-size:50px;
-
-    color:#f0c56f;
-}
-
-.entrance-content p{
-
-    margin-top:15px;
-
-    color:#ddd;
-
-    font-size:18px;
-}
-
+@keyframes breathe{0%,100%{transform:scale(1);opacity:0.9;}50%{transform:scale(1.06);opacity:1;}}
+.entrance-content .eyebrow{justify-content:center;}
+.entrance-content h1{font-size:44px; color:var(--smoke); margin-top:18px;}
+.entrance-content p{margin-top:14px; color:var(--ash); font-size:15px; letter-spacing:0.03em;}
 .entrance-content button{
+  margin-top:34px; padding:16px 44px; border:1px solid var(--gold);
+  border-radius:2px; background:transparent; color:var(--gold-bright);
+  font-family:'Big Shoulders Display'; font-size:18px; letter-spacing:0.12em;
+  text-transform:uppercase; cursor:pointer; transition:0.35s;
+}
+.entrance-content button:hover:not(:disabled){background:var(--gold); color:#0a0806;}
+.entrance-content button:disabled{opacity:0.4; cursor:default;}
 
-    margin-top:35px;
+/* ============ BREADCRUMB NAV ============ */
+nav.rail{
+  position:fixed; top:0; left:0; right:0; z-index:900;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:26px 6%;
+  background:linear-gradient(rgba(7,6,10,0.9),rgba(7,6,10,0));
+  pointer-events:none;
+}
+nav.rail *{pointer-events:auto;}
+.rail-mark{font-family:'Big Shoulders Display'; font-size:22px; letter-spacing:0.04em; color:var(--gold-bright);}
+.rail-dots{display:flex; gap:26px; list-style:none;}
+.rail-dots li a{
+  display:flex; align-items:center; gap:8px;
+  color:var(--ash); text-decoration:none; font-size:12px;
+  letter-spacing:0.14em; text-transform:uppercase; transition:0.3s;
+}
+.rail-dots li a::before{
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--ash); transition:0.3s;
+}
+.rail-dots li a:hover, .rail-dots li.active a{color:var(--smoke);}
+.rail-dots li.active a::before{background:var(--gold-bright); box-shadow:0 0 10px var(--gold-bright);}
 
-    padding:16px 40px;
-
-    border:none;
-
-    border-radius:50px;
-
-    background:#d4a74f;
-
-    color:black;
-
-    font-size:18px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:0.3s;
+@media(max-width:900px){
+  .rail-dots{display:none;}
 }
 
-.entrance-content button:hover{
-
-    transform:scale(1.05);
+/* ============ MANTRA MARQUEE ============ */
+.marquee{
+  position:relative; overflow:hidden; white-space:nowrap;
+  padding:20px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  background:linear-gradient(90deg, rgba(212,167,79,0.04), rgba(168,62,31,0.04));
+}
+.marquee-track{
+  display:inline-flex; gap:60px; animation:marquee 26s linear infinite;
+  font-family:'Big Shoulders Display'; font-size:22px; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--ash);
+}
+.marquee-track span{color:var(--gold-bright); margin:0 18px;}
+@keyframes marquee{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+@media(prefers-reduced-motion:reduce){
+  .marquee-track{animation:none;}
 }
 
-/* OPEN EFFECT */
-
-.open-left{
-
-    transform:
-    translateX(-100%);
+/* ============ CURSOR GLOW ============ */
+#cursorGlow{
+  position:fixed; top:0; left:0; width:420px; height:420px; z-index:2;
+  border-radius:50%; pointer-events:none; mix-blend-mode:screen;
+  background:radial-gradient(circle, rgba(212,167,79,0.10), transparent 70%);
+  transform:translate(-50%,-50%); transition:opacity 0.3s ease;
+  opacity:0;
 }
 
-.open-right{
-
-    transform:
-    translateX(100%);
+/* ============ AMBIENT PARTICLE FIELD ============ */
+#ambientField{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;}
+.amb-particle{
+  position:absolute; bottom:-10px; border-radius:50%;
+  background:radial-gradient(circle, rgba(240,197,111,0.9), rgba(226,102,47,0.4) 70%);
+  opacity:0; animation:riseEmber linear infinite;
 }
 
-/* HERO */
+/* ============ BACK TO TOP ============ */
+.to-top{
+  position:fixed; bottom:26px; left:26px; width:56px; height:56px; z-index:900;
+  border-radius:50%; border:1px solid var(--gold); background:rgba(7,6,10,0.7);
+  backdrop-filter:blur(6px); color:var(--gold-bright); display:flex;
+  align-items:center; justify-content:center; font-size:22px; text-decoration:none;
+  opacity:0; transform:translateY(14px); pointer-events:none; transition:0.4s;
+}
+.to-top.show{opacity:1; transform:translateY(0); pointer-events:auto;}
+.to-top:hover{background:var(--gold); color:#0a0806;}
 
+/* ============ HERO ============ */
 .hero{
-    height:100vh;
-    position:relative;
-    overflow:hidden;
+  min-height:100vh; position:relative;
+  display:flex; align-items:center;
+  padding:140px 8% 80px;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 75% 30%, rgba(212,167,79,0.10), transparent 55%),
+    radial-gradient(ellipse at 20% 80%, rgba(168,62,31,0.10), transparent 50%),
+    var(--void);
 }
-
-/* VIDEO */
-
-.hero video{
-    position:absolute;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-2;
+.smoke-drift{
+  position:absolute; width:520px; height:520px; border-radius:50%;
+  background:radial-gradient(circle, rgba(212,167,79,0.10), transparent 70%);
+  filter:blur(30px); pointer-events:none; z-index:0;
+  animation:drift 22s ease-in-out infinite;
 }
-
-.overlay{
-    position:absolute;
-    inset:0;
-
-    background:
-    linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.6),
-    rgba(0,0,0,0.88)
-    );
-
-    z-index:-1;
+.smoke-drift.d2{
+  width:400px; height:400px;
+  background:radial-gradient(circle, rgba(168,62,31,0.12), transparent 70%);
+  animation:drift2 26s ease-in-out infinite;
 }
-
-/* NAVBAR */
-
-nav{
-    position:fixed;
-    top:0;
-    width:100%;
-    z-index:999;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:22px 8%;
-
-    background:rgba(0,0,0,0.25);
-    backdrop-filter:blur(18px);
-
-    border-bottom:
-    1px solid rgba(255,255,255,0.08);
+@keyframes drift{
+  0%,100%{transform:translate(60%,-10%);}
+  50%{transform:translate(50%,10%);}
 }
-
-.logo{
-    font-size:24px;
-    font-weight:700;
-    color:#f0c56f;
+@keyframes drift2{
+  0%,100%{transform:translate(-20%,60%);}
+  50%{transform:translate(-10%,45%);}
 }
-
-nav ul{
-    display:flex;
-    list-style:none;
+.hero-grid{
+  width:100%; display:grid; grid-template-columns:1.1fr 0.9fr;
+  gap:40px; align-items:center;
+  position:relative; z-index:1;
 }
-
-nav ul li{
-    margin-left:35px;
+.hero-text h1{
+  font-size:clamp(56px,8.4vw,128px);
+  color:var(--smoke);
 }
-
-nav ul li a{
-    color:#eee;
-    text-decoration:none;
-    transition:0.3s;
+.hero-text h1 span{color:var(--gold-bright);}
+.hero-text p{
+  margin-top:30px; max-width:520px; color:var(--ash);
+  font-size:17px; line-height:1.9;
 }
-
-nav ul li a:hover{
-    color:#f0c56f;
-}
-
-/* HERO CONTENT */
-
-.hero-content{
-    height:100vh;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    flex-direction:column;
-
-    text-align:center;
-
-    padding:20px;
-}
-
-/* SHIVA IMAGE */
-
-.about-shiva{
-
-    width:100%;
-
-    max-width:500px;
-
-    display:block;
-
-    margin:auto;
-
-    border-radius:30px;
-
-    box-shadow:
-    0 20px 60px rgba(0,0,0,0.45);
-
-    transition:0.4s;
-
-    animation:floatImage 5s ease-in-out infinite;
-}
-
-.about-shiva:hover{
-
-    transform:scale(1.02);
-}
-
-/* FLOAT EFFECT */
-
-@keyframes floatImage{
-
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
-
-}
-
-/* OM */
-
-.om{
-    font-size:120px;
-    color:#f0c56f;
-
-    text-shadow:
-    0 0 30px rgba(240,197,111,0.5);
-
-    animation:float 3s ease-in-out infinite;
-}
-
-@keyframes float{
-
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
-
-}
-
-.hero-content h1{
-    margin-top:10px;
-    font-size:70px;
-    font-weight:800;
-}
-
-.hero-content p{
-    margin-top:25px;
-
-    max-width:850px;
-
-    line-height:2;
-
-    color:#cfcfcf;
-
-    font-size:18px;
-}
-
-/* BUTTONS */
-
-.hero-buttons{
-    margin-top:40px;
-
-    display:flex;
-    gap:20px;
-}
-
+.hero-buttons{margin-top:44px; display:flex; gap:18px; flex-wrap:wrap;}
 .btn{
-    padding:15px 35px;
+  padding:16px 34px; border-radius:2px; text-decoration:none;
+  font-family:'Big Shoulders Display'; letter-spacing:0.08em;
+  font-size:16px; text-transform:uppercase; transition:0.3s;
+}
+.gold-btn{background:var(--gold); color:#0a0806;}
+.gold-btn:hover{background:var(--gold-bright);}
+.line-btn{border:1px solid var(--line); color:var(--smoke);}
+.line-btn:hover{border-color:var(--gold); color:var(--gold-bright);}
 
-    border-radius:50px;
-
-    text-decoration:none;
-
-    font-weight:600;
-
-    transition:0.3s;
+/* HERO SIGNATURE VISUAL — 3D Shiva render */
+.shiva-hero-wrap{
+  position:relative; min-height:460px;
+  display:flex; align-items:center; justify-content:center;
+  perspective:1400px; padding:20px 0 30px;
+}
+.shiva-hero-glow{
+  position:absolute; width:460px; height:460px; border-radius:50%;
+  top:50%; left:50%; transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(226,102,47,0.30), rgba(212,167,79,0.12) 45%, transparent 70%);
+  filter:blur(24px);
+}
+.shiva-hero-img{
+  position:relative; max-width:420px; width:100%; height:auto;
+  filter:drop-shadow(0 30px 60px rgba(0,0,0,0.6)) drop-shadow(0 0 50px rgba(212,167,79,0.25));
+  transform:rotateY(calc(var(--rot,0deg) + var(--tiltx,0deg))) rotateX(calc(4deg + var(--tilty,0deg)));
+  transition:transform 0.25s ease-out;
+  animation:shivaFloat 6s ease-in-out infinite;
+}
+@keyframes shivaFloat{
+  0%,100%{transform:translateY(0) rotateY(calc(var(--rot,0deg) + var(--tiltx,0deg))) rotateX(calc(4deg + var(--tilty,0deg)));}
+  50%{transform:translateY(-16px) rotateY(calc(var(--rot,0deg) + var(--tiltx,0deg))) rotateX(calc(4deg + var(--tilty,0deg)));}
+}
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .shiva-hero-wrap{min-height:320px; margin-top:30px;}
+  .shiva-hero-img{max-width:300px;}
 }
 
-.gold-btn{
-    background:#d4a74f;
-    color:black;
+/* ============ SCROLL REVEAL ============ */
+.reveal{opacity:0; transform:translateY(34px); transition:opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.7,.2,1);}
+.reveal.in-view{opacity:1; transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1; transform:none; transition:none;}
 }
 
-.gold-btn:hover{
-    background:#f0c56f;
-}
-
-.glass-btn{
-    background:rgba(255,255,255,0.05);
-
-    border:
-    1px solid rgba(255,255,255,0.08);
-
-    backdrop-filter:blur(12px);
-
-    color:white;
-}
-
-.glass-btn:hover{
-    background:rgba(255,255,255,0.12);
-}
-
-/* SECTIONS */
-
-section{
-    padding:110px 8%;
-}
-
-.section-title{
-    text-align:center;
-    font-size:48px;
-    color:#f0c56f;
-    margin-bottom:15px;
-}
-
-.section-sub{
-    text-align:center;
-    color:#999;
-    margin-bottom:70px;
-}
+/* ============ SECTIONS ============ */
+section, header.hero, footer, nav.rail{position:relative; z-index:1;}
+section{padding:130px 8%;}
+.section-head{max-width:760px; margin-bottom:70px;}
+.section-head h2{font-size:clamp(38px,6vw,72px); color:var(--smoke);}
+.section-head h2 span{color:var(--gold-bright);}
+.section-head p{color:var(--ash); margin-top:18px; font-size:16px; max-width:560px; line-height:1.8;}
 
 /* ABOUT */
-
-.about-grid{
-    display:grid;
-    grid-template-columns:
-    repeat(auto-fit,minmax(340px,1fr));
-
-    gap:50px;
-    align-items:center;
+.about-grid{display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center;}
+.about-shiva{
+  width:100%; border-radius:4px; filter:saturate(0.9);
+  box-shadow:0 40px 90px rgba(0,0,0,0.55);
+  animation:floatImg 6s ease-in-out infinite;
 }
-
-.about-text h3{
-    font-size:36px;
-    margin-bottom:20px;
-}
-
-.about-text p{
-    line-height:2;
-    color:#c8c8c8;
-}
-
-/* SHLOKAM */
-
+@keyframes floatImg{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
 .shlokam{
-    margin-top:35px;
-
-    background:
-    linear-gradient(
-    135deg,
-    rgba(212,167,79,0.12),
-    rgba(255,255,255,0.03)
-    );
-
-    border:
-    1px solid rgba(212,167,79,0.15);
-
-    padding:30px;
-
-    border-radius:24px;
-
-    color:#f0c56f;
-
-    line-height:2;
+  margin-top:36px; padding:32px; border-radius:4px;
+  border-left:2px solid var(--gold);
+  background:linear-gradient(90deg, rgba(212,167,79,0.08), transparent);
+  font-family:'Cormorant Garamond',serif; font-style:italic; font-size:22px;
+  color:var(--gold-bright); line-height:2;
 }
+.about-text p{color:var(--ash); line-height:2; font-size:16px;}
 
 /* POOJA */
-
-.cards{
-    display:grid;
-    grid-template-columns:
-    repeat(auto-fit,minmax(260px,1fr));
-
-    gap:25px;
+.pooja-row{border-top:1px solid var(--line);}
+.pooja-line{
+  display:grid; grid-template-columns:140px 1fr auto;
+  align-items:center; gap:30px; padding:36px 0;
+  border-bottom:1px solid var(--line); transition:0.3s;
 }
+.pooja-line:hover{background:rgba(212,167,79,0.03);}
+.pooja-time{font-family:'Big Shoulders Display'; font-size:38px; color:var(--gold-bright);}
+.pooja-name{font-size:17px; color:var(--smoke); letter-spacing:0.02em;}
+.pooja-tag{color:var(--ash); font-size:13px; letter-spacing:0.1em; text-transform:uppercase;}
 
-.card{
-    background:
-    linear-gradient(
-    135deg,
-    rgba(255,255,255,0.04),
-    rgba(255,255,255,0.02)
-    );
-
-    border:
-    1px solid rgba(255,255,255,0.06);
-
-    padding:35px;
-
-    border-radius:28px;
-
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-10px);
-
-    border:
-    1px solid rgba(212,167,79,0.3);
-}
-
-.card h3{
-    color:#f0c56f;
-    margin-bottom:15px;
-}
-
-.card p{
-    color:#bdbdbd;
-    line-height:1.8;
-}
-
-/* LIVE COUNTDOWN */
-
-.live-countdowns{
-
-    display:flex;
-    flex-direction:column;
-
-    gap:25px;
-
-    max-width:1000px;
-    margin:auto;
-}
-
+/* FESTIVAL */
+.live-countdowns{display:flex; flex-direction:column; gap:24px;}
 .live-card{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:35px;
-
-    border-radius:30px;
-
-    background:
-    linear-gradient(
-    135deg,
-    rgba(255,255,255,0.04),
-    rgba(255,255,255,0.02)
-    );
-
-    border:
-    1px solid rgba(255,255,255,0.08);
-
-    backdrop-filter:blur(15px);
-
-    transition:0.3s;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:44px; border-radius:4px; border:1px solid var(--line);
+  background:linear-gradient(135deg, rgba(255,255,255,0.02), transparent);
+  transition:0.35s;
 }
-
-.live-card:hover{
-
-    transform:translateY(-6px);
-
-    border:
-    1px solid rgba(212,167,79,0.35);
-}
-
-.festival-left h3{
-
-    font-size:30px;
-    color:#f0c56f;
-    margin-bottom:10px;
-}
-
-.festival-left p{
-
-    color:#bdbdbd;
-    line-height:1.8;
-}
-
-.live-timer{
-
-    font-size:42px;
-    font-weight:800;
-
-    color:white;
-
-    text-align:right;
-}
+.live-card:hover{border-color:rgba(212,167,79,0.4); box-shadow:0 20px 60px rgba(212,167,79,0.08);}
+.festival-left h3{font-family:'Big Shoulders Display'; font-size:32px; color:var(--gold-bright); font-weight:500;}
+.festival-left p{color:var(--ash); margin-top:8px; font-size:15px;}
+.live-timer{font-family:'Big Shoulders Display'; font-size:38px; color:var(--smoke); text-align:right;}
 
 /* GALLERY */
-
-.gallery{
-    display:grid;
-    grid-template-columns:
-    repeat(auto-fit,minmax(260px,1fr));
-
-    gap:20px;
+.gallery{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; perspective:1000px;}
+.gallery-item{
+  position:relative; overflow:hidden; border-radius:4px; height:400px;
+  transform:rotateX(var(--ry,0deg)) rotateY(var(--rx,0deg));
+  transition:transform 0.25s ease-out;
 }
-
-.gallery img{
-    width:100%;
-    height:380px;
-
-    object-fit:cover;
-
-    border-radius:25px;
-
-    transition:0.4s;
+.gallery-item img{width:100%; height:100%; object-fit:cover; transition:0.6s; filter:saturate(0.85) brightness(0.9);}
+.gallery-item:hover img{transform:scale(1.08); filter:saturate(1) brightness(1);}
+.gallery-item::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,0.55), transparent 45%);
 }
-
-.gallery img:hover{
-    transform:scale(1.03);
+.gallery-item::before{
+  content:''; position:absolute; top:0; left:-60%; width:40%; height:100%; z-index:2;
+  background:linear-gradient(115deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform:skewX(-20deg); transition:left 0.9s ease;
 }
+.gallery-item:hover::before{left:130%;}
+
+/* LEADERSHIP LINK BAND */
+.lead-band{
+  border:1px solid var(--line); border-radius:4px;
+  padding:60px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;
+  background:radial-gradient(ellipse at 0% 0%, rgba(168,62,31,0.10), transparent 60%);
+}
+.lead-band h3{font-family:'Big Shoulders Display'; font-size:clamp(30px,4vw,48px); color:var(--smoke);}
+.lead-band p{color:var(--ash); margin-top:10px; max-width:480px;}
 
 /* MAP */
-
-.map-box{
-
-    overflow:hidden;
-
-    border-radius:30px;
-
-    box-shadow:
-    0 20px 40px rgba(0,0,0,0.35);
-
-    border:
-    1px solid rgba(255,255,255,0.08);
-}
+.map-box{border-radius:4px; overflow:hidden; border:1px solid var(--line); filter:grayscale(0.4) contrast(1.1);}
 
 /* CONTACT */
-
-.contact-box{
-    max-width:850px;
-    margin:auto;
-
-    background:
-    linear-gradient(
-    135deg,
-    rgba(255,255,255,0.04),
-    rgba(255,255,255,0.02)
-    );
-
-    border:
-    1px solid rgba(255,255,255,0.06);
-
-    padding:50px;
-
-    border-radius:30px;
+.contact-grid{display:grid; grid-template-columns:1fr 1.3fr; gap:60px;}
+.contact-info p{color:var(--ash); margin-bottom:18px; font-size:15px;}
+.contact-info p strong{color:var(--smoke); display:block; font-family:'Big Shoulders Display'; font-size:15px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px;}
+form{display:flex; flex-direction:column; gap:16px;}
+input,textarea{
+  background:transparent; border:none; border-bottom:1px solid var(--line);
+  padding:14px 2px; color:var(--smoke); outline:none; font-size:15px;
+  border-radius:0; transition:0.3s;
 }
-
-.contact-info{
-    margin-bottom:30px;
+input:focus,textarea:focus{border-color:var(--gold);}
+input::placeholder,textarea::placeholder{color:var(--ash);}
+form button{
+  margin-top:10px; align-self:flex-start;
+  background:var(--gold); color:#0a0806; border:none;
+  padding:16px 38px; font-family:'Big Shoulders Display'; letter-spacing:0.1em;
+  text-transform:uppercase; font-size:15px; border-radius:2px; cursor:pointer; transition:0.3s;
 }
-
-.contact-info p{
-    margin-bottom:15px;
-    color:#d0d0d0;
-}
-
-form{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-}
-
-input, textarea{
-    background:rgba(255,255,255,0.05);
-
-    border:
-    1px solid rgba(255,255,255,0.08);
-
-    padding:18px;
-
-    border-radius:16px;
-
-    color:white;
-
-    outline:none;
-}
-
-button{
-    background:#d4a74f;
-
-    color:black;
-
-    border:none;
-
-    padding:18px;
-
-    border-radius:16px;
-
-    font-weight:700;
-
-    cursor:pointer;
-}
-
-/* FOOTER */
+form button:hover{background:var(--gold-bright);}
 
 footer{
-    text-align:center;
-
-    padding:35px;
-
-    border-top:
-    1px solid rgba(255,255,255,0.06);
-
-    color:#888;
+  text-align:center; padding:50px; border-top:1px solid var(--line);
+  color:var(--ash); font-size:13px; letter-spacing:0.08em;
 }
-
-/* WHATSAPP */
+footer span{color:var(--gold-bright);}
 
 .whatsapp{
-    position:fixed;
-
-    bottom:25px;
-    right:25px;
-
-    width:68px;
-    height:68px;
-
-    background:#25D366;
-
-    border-radius:50%;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    color:white;
-
-    font-size:34px;
-
-    text-decoration:none;
-
-    z-index:999;
+  position:fixed; bottom:26px; right:26px; width:60px; height:60px;
+  background:#1a1a1a; border:1px solid var(--gold); border-radius:50%;
+  display:flex; justify-content:center; align-items:center; color:var(--gold-bright);
+  font-size:28px; text-decoration:none; z-index:999; transition:0.3s;
 }
+.whatsapp:hover{background:var(--gold); color:#0a0806;}
 
-/* MOBILE */
-
-@media(max-width:768px){
-
-    nav{
-
-        flex-direction:column;
-        padding:15px;
-    }
-
-    .logo{
-
-        margin-bottom:10px;
-        font-size:20px;
-    }
-
-    nav ul{
-
-        display:flex;
-        flex-wrap:wrap;
-        justify-content:center;
-
-        gap:8px;
-    }
-
-    nav ul li{
-
-        margin-left:0;
-    }
-
-    nav ul li a{
-
-        font-size:13px;
-
-        padding:8px 12px;
-
-        border-radius:20px;
-
-        background:
-        rgba(255,255,255,0.05);
-    }
-
-    .hero-content h1{
-        font-size:42px;
-    }
-
-    .om{
-        font-size:80px;
-    }
-
-    .section-title{
-        font-size:34px;
-    }
-
-    .live-card{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:25px;
-    }
-
-    .live-timer{
-        text-align:left;
-        font-size:34px;
-    }
-
+@media(max-width:900px){
+  .about-grid, .contact-grid{grid-template-columns:1fr;}
+  .pooja-line{grid-template-columns:80px 1fr; row-gap:6px;}
+  .live-card{flex-direction:column; align-items:flex-start; gap:20px;}
+  .live-timer{text-align:left;}
+  section{padding:90px 6%;}
 }
 </style>
-
 </head>
-
 <body>
 
-<!-- TEMPLE ENTRANCE -->
+<div id="cursorGlow"></div>
+<div id="ambientField"></div>
 
+<!-- ENTRANCE -->
 <div id="templeEntrance">
-
-<div class="door left-door"></div>
-
-<div class="door right-door"></div>
-
-<div class="entrance-content">
-
-<div class="om-symbol">
-ॐ
+  <div class="door-scene">
+    <div class="door left-door"></div>
+    <div class="door right-door"></div>
+  </div>
+  <div class="light-beam" id="lightBeam"></div>
+  <div class="embers" id="embers"></div>
+  <div class="entrance-content" id="entranceContent">
+    <div class="om-symbol">ॐ</div>
+    <span class="eyebrow">Sri Shivan Alayam · Brickfields</span>
+    <h1 class="display">Enter the Sanctum</h1>
+    <p>The threshold is open. Step through into the sacred presence of Lord Shiva.</p>
+    <button onclick="openTemple()" id="enterBtn">Enter Temple</button>
+  </div>
 </div>
 
-<h1>
-🕉 Sri Shivan Alayam
-</h1>
-
-<p>
-Enter the divine spiritual world of Lord Shiva
-</p>
-
-<button onclick="openTemple()">
-Enter Temple
-</button>
-
-</div>
-
-</div>
-
-<!-- HERO -->
-
-<header class="hero">
-
-<video autoplay muted loop playsinline>
-
-<source
-src="https://cdn.coverr.co/videos/coverr-burning-candle-1560097906196?download=1080p"
-type="video/mp4">
-
-</video>
-
-<div class="overlay"></div>
-
-<!-- NAVBAR -->
-
-<nav>
-
-<div class="logo">
-🕉 Sri Shivan Alayam
-</div>
-
-<ul>
-<li><a href="#about">About</a></li>
-<li><a href="#pooja">Pooja</a></li>
-<li><a href="#festival">Festival</a></li>
-<li><a href="#gallery">Gallery</a></li>
-<li><a href="management.html">Management</a></li>
-<li><a href="#map">Location</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-
+<!-- NAV -->
+<nav class="rail">
+  <div class="rail-mark">卐 SSA</div>
+  <ul class="rail-dots">
+    <li data-sec="about" class="active"><a href="#about">About</a></li>
+    <li data-sec="pooja"><a href="#pooja">Pooja</a></li>
+    <li data-sec="festival"><a href="#festival">Festival</a></li>
+    <li data-sec="gallery"><a href="#gallery">Gallery</a></li>
+    <li data-sec="leadership"><a href="#leadership">Leadership</a></li>
+    <li data-sec="map"><a href="#map">Location</a></li>
+    <li data-sec="contact"><a href="#contact">Contact</a></li>
+  </ul>
 </nav>
 
-<!-- HERO CONTENT -->
-
-<div class="hero-content">
-
-<div class="om">
-ॐ
-</div>
-
-<h1>
-ஸ்ரீ சிவன் ஆலயம்
-</h1>
-
-<p>
-Experience divine energy, spiritual peace,
-sacred Shiva poojas and powerful blessings
-at Sri Shivan Alayam Brickfields.
-</p>
-
-<div class="hero-buttons">
-
-<a href="#contact"
-class="btn gold-btn">
-
-Visit Temple
-
-</a>
-
-<a href="#pooja"
-class="btn glass-btn">
-
-Explore Poojas
-
-</a>
-
-</div>
-
-</div>
-
+<!-- HERO -->
+<header class="hero">
+  <div class="smoke-drift"></div>
+  <div class="smoke-drift d2"></div>
+  <div class="hero-grid">
+    <div class="hero-text">
+      <span class="eyebrow">ஸ்ரீ சிவன் ஆலயம் · Brickfields, Kuala Lumpur</span>
+      <h1 class="display">One<br>Deity.<br><span>Many</span><br>Devotions.</h1>
+      <p>One deity, worshipped through many forms of devotion — daily pooja, sacred festival, seva and celebration, all offered toward the same still presence. Descend through the life of Sri Shivan Alayam below.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn gold-btn">Visit Temple</a>
+        <a href="#pooja" class="btn line-btn">Pooja Timings</a>
+      </div>
+    </div>
+    <div class="shiva-hero-wrap">
+      <div class="shiva-hero-glow"></div>
+      <img src="shivan-3d.png" alt="Lord Shiva 3D render" class="shiva-hero-img" id="shivaHero">
+    </div>
+  </div>
 </header>
 
+<div class="marquee">
+  <div class="marquee-track">
+    <span>ॐ</span> Om Namah Shivaya <span>ॐ</span> Daily Pooja <span>ॐ</span> Sacred Abishegam <span>ॐ</span> Rudra Chanting <span>ॐ</span> Om Namah Shivaya <span>ॐ</span> Daily Pooja <span>ॐ</span> Sacred Abishegam <span>ॐ</span> Rudra Chanting
+  </div>
+</div>
+
 <!-- ABOUT -->
-
 <section id="about">
-
-<h2 class="section-title">
-Divine Shiva Experience
-</h2>
-
-<p class="section-sub">
-A sacred spiritual home for devotees
-</p>
-
-<div class="about-grid">
-
-<div class="about-image">
-
-<img
-src="shivan.png"
-class="about-shiva">
-
-</div>
-
-<div class="about-text">
-
-<h3>
-🛕 Om Namah Shivaya
-</h3>
-
-<p>
-Sri Shivan Alayam Brickfields stands as a symbol
-of peace, divine energy and spiritual devotion.
-Daily poojas, Rudra chanting,
-special abishegam and sacred festivals
-are conducted with devotion and tradition.
-</p>
-
-<div class="shlokam">
-
-ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् ।<br><br>
-
-उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात् ॥
-
-</div>
-
-</div>
-
-</div>
-
+  <div class="section-head">
+    <span class="eyebrow">🛕 The Sanctum</span>
+    <h2 class="display">Om Namah <span>Shivaya</span></h2>
+    <p>A sacred home for peace, devotion and divine energy — where daily rites, abishegam and Rudra chanting keep an unbroken thread of tradition alive in the heart of Brickfields.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-image">
+      <img src="shivan.png" class="about-shiva" alt="Lord Shiva">
+    </div>
+    <div class="about-text">
+      <p>Sri Shivan Alayam Brickfields stands as a symbol of peace, divine energy and spiritual devotion. Daily poojas, Rudra chanting, special abishegam and sacred festivals are conducted with devotion and tradition, welcoming every devotee who crosses the threshold.</p>
+      <div class="shlokam">
+        ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् ।<br>
+        उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात् ॥
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- POOJA -->
-
 <section id="pooja">
-
-<h2 class="section-title">
-Daily Temple Pooja Timings
-</h2>
-
-<p class="section-sub">
-Sacred Shiva poojas conducted daily
-</p>
-
-<div class="cards">
-
-<div class="card">
-<h3>🌅 7:00 AM</h3>
-<p>Temple Opening & Morning Pooja</p>
-</div>
-
-<div class="card">
-<h3>🛕 10:00 AM</h3>
-<p>Morning Temple Closing</p>
-</div>
-
-<div class="card">
-<h3>🪔 7:00 PM</h3>
-<p>Evening Deeparathanai & Shiva Pooja</p>
-</div>
-
-<div class="card">
-<h3>🌙 10:00 PM</h3>
-<p>Temple Closing Time</p>
-</div>
-
-</div>
-
+  <div class="section-head">
+    <span class="eyebrow">🪔 Daily Rites</span>
+    <h2 class="display">Pooja <span>Timings</span></h2>
+    <p>Four fixed points structure each day of worship — from the temple's opening bell to the closing deeparathanai.</p>
+  </div>
+  <div class="pooja-row">
+    <div class="pooja-line">
+      <div class="pooja-time">7:00<span style="font-size:16px;">am</span></div>
+      <div class="pooja-name">Temple Opening & Morning Pooja</div>
+      <div class="pooja-tag">Morning</div>
+    </div>
+    <div class="pooja-line">
+      <div class="pooja-time">10:00<span style="font-size:16px;">am</span></div>
+      <div class="pooja-name">Morning Temple Closing</div>
+      <div class="pooja-tag">Midday</div>
+    </div>
+    <div class="pooja-line">
+      <div class="pooja-time">7:00<span style="font-size:16px;">pm</span></div>
+      <div class="pooja-name">Evening Deeparathanai & Shiva Pooja</div>
+      <div class="pooja-tag">Evening</div>
+    </div>
+    <div class="pooja-line">
+      <div class="pooja-time">10:00<span style="font-size:16px;">pm</span></div>
+      <div class="pooja-name">Temple Closing Time</div>
+      <div class="pooja-tag">Night</div>
+    </div>
+  </div>
 </section>
 
 <!-- FESTIVAL -->
-
 <section id="festival">
-
-<h2 class="section-title">
-Live Festival Countdowns
-</h2>
-
-<p class="section-sub">
-Upcoming sacred Shiva festivals & spiritual days
-</p>
-
-<div class="live-countdowns">
-
-<div class="live-card">
-
-<div class="festival-left">
-
-<h3>🕉 Maha Shivaratri</h3>
-
-<p>
-Night of divine Shiva blessings,
-bhajans & abishegam
-</p>
-
-</div>
-
-<div class="festival-right">
-
-<div class="live-timer"
-id="shivaratriTimer">
-
-Loading...
-
-</div>
-
-</div>
-
-</div>
-
-<div class="live-card">
-
-<div class="festival-left">
-
-<h3>🔔 Pradosham</h3>
-
-<p>
-Sacred Shiva pooja day
-for spiritual cleansing
-</p>
-
-</div>
-
-<div class="festival-right">
-
-<div class="live-timer"
-id="pradoshamTimer">
-
-Loading...
-
-</div>
-
-</div>
-
-</div>
-
-<div class="live-card">
-
-<div class="festival-left">
-
-<h3>🌑 Amavasai</h3>
-
-<p>
-Special prayers for ancestors
-and divine peace
-</p>
-
-</div>
-
-<div class="festival-right">
-
-<div class="live-timer"
-id="amavasaiTimer">
-
-Loading...
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+  <div class="section-head">
+    <span class="eyebrow">🕉 Sacred Calendar</span>
+    <h2 class="display">Live Festival <span>Countdowns</span></h2>
+    <p>The temple's biggest nights of devotion, counted down in real time.</p>
+  </div>
+  <div class="live-countdowns">
+    <div class="live-card">
+      <div class="festival-left">
+        <h3>Maha Shivaratri</h3>
+        <p>Night of divine Shiva blessings, bhajans & abishegam</p>
+      </div>
+      <div class="live-timer" id="shivaratriTimer">Loading...</div>
+    </div>
+    <div class="live-card">
+      <div class="festival-left">
+        <h3>Pradosham</h3>
+        <p>Sacred Shiva pooja day for spiritual cleansing</p>
+      </div>
+      <div class="live-timer" id="pradoshamTimer">Loading...</div>
+    </div>
+    <div class="live-card">
+      <div class="festival-left">
+        <h3>Amavasai</h3>
+        <p>Special prayers for ancestors and divine peace</p>
+      </div>
+      <div class="live-timer" id="amavasaiTimer">Loading...</div>
+    </div>
+  </div>
 </section>
 
 <!-- GALLERY -->
-
 <section id="gallery">
+  <div class="section-head">
+    <span class="eyebrow">📿 Moments</span>
+    <h2 class="display">Temple <span>Gallery</span></h2>
+    <p>The real atmosphere of Sri Shivan Alayam — light, smoke, flowers and devotion.</p>
+  </div>
+  <div class="gallery">
+    <div class="gallery-item"><img src="shivan1.png" alt="Temple moment"></div>
+    <div class="gallery-item"><img src="shivan2.png" alt="Temple moment"></div>
+    <div class="gallery-item"><img src="shivan3.png" alt="Temple moment"></div>
+  </div>
+</section>
 
-<h2 class="section-title">
-Temple Gallery
-</h2>
-
-<p class="section-sub">
-Real temple atmosphere & spiritual moments
-</p>
-
-<div class="gallery">
-
-<img
-src="shivan1.png"
-class="about-shivan">
-
-<img
-src="shivan2.png"
-class="about-shivan">
-
-<img
-src="shivan3.png"
-class="about-shivan">
-
-</div>
-
+<!-- LEADERSHIP -->
+<section id="leadership">
+  <div class="lead-band">
+    <div>
+      <span class="eyebrow">🔱 Governance</span>
+      <h3 class="display">Temple Leadership<br>& Management</h3>
+      <p>Meet the founder, chairman and committee who steward Sri Shivan Alayam's daily life, festivals and outreach.</p>
+    </div>
+    <a href="management.html" class="btn gold-btn">View Leadership →</a>
+  </div>
 </section>
 
 <!-- MAP -->
-
 <section id="map">
-
-<h2 class="section-title">
-Temple Location
-</h2>
-
-<p class="section-sub">
-Visit Sri Shivan Alayam Brickfields
-</p>
-
-<div class="map-box">
-
-<iframe
-src="https://www.google.com/maps?q=Sri+Sivan+Alayam+Brickfields&output=embed"
-width="100%"
-height="450"
-style="border:0; border-radius:25px;"
-allowfullscreen=""
-loading="lazy">
-</iframe>
-
-</div>
-
+  <div class="section-head">
+    <span class="eyebrow">📍 Find Us</span>
+    <h2 class="display">Temple <span>Location</span></h2>
+    <p>Visit Sri Shivan Alayam Brickfields, Kuala Lumpur.</p>
+  </div>
+  <div class="map-box">
+    <iframe src="https://www.google.com/maps?q=Sri+Sivan+Alayam+Brickfields&output=embed" width="100%" height="440" style="border:0;" loading="lazy"></iframe>
+  </div>
 </section>
 
 <!-- CONTACT -->
-
 <section id="contact">
-
-<h2 class="section-title">
-Temple Contact
-</h2>
-
-<p class="section-sub">
-Connect with Sri Shivan Alayam
-</p>
-
-<div class="contact-box">
-
-<div class="contact-info">
-
-<p>📍 Brickfields, Kuala Lumpur</p>
-<p>📞 +60 12-345 6789</p>
-<p>📧 Srishivanalayam@gmail.com</p>
-
-</div>
-
-<form>
-
-<input type="text"
-placeholder="Your Name">
-
-<input type="email"
-placeholder="Email Address">
-
-<textarea rows="5"
-placeholder="Prayer Request"></textarea>
-
-<button type="submit">
-Send Prayer Request
-</button>
-
-</form>
-
-</div>
-
+  <div class="section-head">
+    <span class="eyebrow">🙏 Reach Out</span>
+    <h2 class="display">Temple <span>Contact</span></h2>
+    <p>Send a prayer request or get in touch with the temple office.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p><strong>Address</strong>Brickfields, Kuala Lumpur</p>
+      <p><strong>Phone</strong>+60 12-345 6789</p>
+      <p><strong>Email</strong>Srishivanalayam@gmail.com</p>
+    </div>
+    <form>
+      <input type="text" placeholder="Your Name">
+      <input type="email" placeholder="Email Address">
+      <textarea rows="5" placeholder="Prayer Request"></textarea>
+      <button type="submit">Send Prayer Request</button>
+    </form>
+  </div>
 </section>
 
-<!-- FOOTER -->
-
 <footer>
-
-🕉 Om Namah Shivaya |
-Sri Shivan Alayam Brickfields
-
+  <span>🕉 Om Namah Shivaya</span> · Sri Shivan Alayam Brickfields
 </footer>
 
-<!-- WHATSAPP -->
-
-<a href="https://wa.me/60123456789"
-class="whatsapp"
-target="_blank">
-
-<i class="fa-brands fa-whatsapp"></i>
-
-</a>
-
-<!-- SCRIPT -->
+<a href="https://wa.me/60123456789" class="whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+<a href="#" class="to-top" id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">ॐ</a>
 
 <script>
-
-/* TEMPLE ENTRANCE */
+function spawnEmbers(container, count){
+  for(let i=0;i<count;i++){
+    const e = document.createElement('div');
+    e.className = 'ember-particle';
+    const size = 2 + Math.random()*4;
+    e.style.width = size+'px';
+    e.style.height = size+'px';
+    e.style.left = (30 + Math.random()*40) + '%';
+    e.style.setProperty('--drift', (Math.random()*80-40)+'px');
+    e.style.animationDuration = (2.6 + Math.random()*2.2)+'s';
+    e.style.animationDelay = (Math.random()*1.2)+'s';
+    container.appendChild(e);
+  }
+}
 
 function openTemple(){
+  const btn = document.getElementById('enterBtn');
+  btn.disabled = true;
+  const embersBox = document.getElementById('embers');
+  spawnEmbers(embersBox, 26);
 
-    document.querySelector(".left-door")
-    .classList.add("open-left");
+  // beam grows first, as if light is pressing through the seam
+  const beam = document.getElementById('lightBeam');
+  requestAnimationFrame(()=>{ beam.classList.add('beam-on'); });
 
-    document.querySelector(".right-door")
-    .classList.add("open-right");
+  // content dissolves as the doors begin to swing
+  setTimeout(()=>{
+    document.getElementById('entranceContent').classList.add('entrance-fade');
+  }, 350);
 
-    setTimeout(()=>{
+  // doors swing open on their hinges
+  setTimeout(()=>{
+    document.querySelector(".left-door").classList.add("open-left");
+    document.querySelector(".right-door").classList.add("open-right");
+  }, 500);
 
-        document.getElementById(
-        "templeEntrance"
-        ).style.display="none";
+  // beam fades back out once the doors are open and light is no longer contained
+  setTimeout(()=>{ beam.classList.remove('beam-on'); }, 1900);
 
-    },2000);
+  setTimeout(()=>{ document.getElementById("templeEntrance").style.display="none"; }, 2900);
 }
 
-/* LIVE COUNTDOWN */
-
-function updateCountdown(id,targetDate){
-
-    const timer =
-    document.getElementById(id);
-
-    function calculate(){
-
-        const now =
-        new Date().getTime();
-
-        const distance =
-        targetDate - now;
-
-        if(distance < 0){
-
-            timer.innerHTML =
-            "Festival Started";
-
-            return;
-        }
-
-        const days =
-        Math.floor(distance /
-        (1000 * 60 * 60 * 24));
-
-        const hours =
-        Math.floor((distance %
-        (1000 * 60 * 60 * 24)) /
-        (1000 * 60 * 60));
-
-        const minutes =
-        Math.floor((distance %
-        (1000 * 60 * 60)) /
-        (1000 * 60));
-
-        const seconds =
-        Math.floor((distance %
-        (1000 * 60)) /
-        1000);
-
-        timer.innerHTML =
-        days + "D : " +
-        hours + "H : " +
-        minutes + "M : " +
-        seconds + "S";
+/* scroll-reveal motion across the page */
+const revealTargets = document.querySelectorAll(
+  '.section-head, .about-grid, .pooja-line, .live-card, .gallery-item, .lead-band, .contact-grid, .leader'
+);
+revealTargets.forEach(el=> el.classList.add('reveal'));
+const revealObs = new IntersectionObserver((entries)=>{
+  entries.forEach((entry, i)=>{
+    if(entry.isIntersecting){
+      setTimeout(()=> entry.target.classList.add('in-view'), i*40);
+      revealObs.unobserve(entry.target);
     }
+  });
+}, { threshold:0.15, rootMargin:"0px 0px -8% 0px" });
+revealTargets.forEach(el=> revealObs.observe(el));
 
-    calculate();
+/* scroll-linked shiva image tilt */
+const shivaHero = document.getElementById('shivaHero');
+window.addEventListener('scroll', ()=>{
+  const rot = Math.min(14, window.scrollY / 50);
+  shivaHero.style.setProperty('--rot', rot + 'deg');
+});
 
-    setInterval(calculate,1000);
+/* breadcrumb active state */
+const sections = document.querySelectorAll('section[id], header.hero');
+const dots = document.querySelectorAll('.rail-dots li');
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      dots.forEach(d=>d.classList.remove('active'));
+      const match = document.querySelector(`.rail-dots li[data-sec="${e.target.id}"]`);
+      if(match) match.classList.add('active');
+    }
+  });
+},{ rootMargin:"-45% 0px -50% 0px" });
+sections.forEach(s=>{ if(s.id) obs.observe(s); });
+
+/* live countdowns */
+function updateCountdown(id,targetDate){
+  const timer = document.getElementById(id);
+  function calculate(){
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    if(distance < 0){ timer.innerHTML = "Festival Started"; return; }
+    const days = Math.floor(distance / (1000*60*60*24));
+    const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+    const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+    const seconds = Math.floor((distance % (1000*60)) / 1000);
+    timer.innerHTML = days + "D : " + hours + "H : " + minutes + "M : " + seconds + "S";
+  }
+  calculate();
+  setInterval(calculate,1000);
+}
+const mahaShivaratri = new Date("March 6, 2027 00:00:00").getTime();
+const pradosham = new Date("May 28, 2026 18:00:00").getTime();
+const amavasai = new Date("May 26, 2026 00:00:00").getTime();
+updateCountdown("shivaratriTimer", mahaShivaratri);
+updateCountdown("pradoshamTimer", pradosham);
+updateCountdown("amavasaiTimer", amavasai);
+
+/* cursor glow, only on fine pointers */
+if(window.matchMedia('(pointer:fine)').matches){
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', (e)=>{
+    glow.style.opacity = '1';
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+  document.addEventListener('mouseleave', ()=> glow.style.opacity = '0');
+
+  /* shiva hero image parallax tilt, layered on top of the scroll rotation */
+  const shivaWrap = document.querySelector('.shiva-hero-wrap');
+  if(shivaWrap){
+    shivaWrap.addEventListener('mousemove', (e)=>{
+      const r = shivaWrap.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      shivaHero.style.setProperty('--tiltx', (px*12) + 'deg');
+      shivaHero.style.setProperty('--tilty', (py*-8) + 'deg');
+    });
+    shivaWrap.addEventListener('mouseleave', ()=>{
+      shivaHero.style.setProperty('--tiltx','0deg');
+      shivaHero.style.setProperty('--tilty','0deg');
+    });
+  }
+
+  /* magnetic buttons */
+  document.querySelectorAll('.btn').forEach(btn=>{
+    btn.style.display = btn.style.display || 'inline-block';
+    btn.addEventListener('mousemove', (e)=>{
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      btn.style.transform = `translate(${x*10}px, ${y*10}px)`;
+    });
+    btn.addEventListener('mouseleave', ()=>{ btn.style.transform = 'translate(0,0)'; });
+  });
+
+  /* gallery tilt */
+  document.querySelectorAll('.gallery-item').forEach(item=>{
+    item.addEventListener('mousemove', (e)=>{
+      const r = item.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      item.style.setProperty('--rx', (px*10) + 'deg');
+      item.style.setProperty('--ry', (py*-8) + 'deg');
+    });
+    item.addEventListener('mouseleave', ()=>{
+      item.style.setProperty('--rx','0deg');
+      item.style.setProperty('--ry','0deg');
+    });
+  });
 }
 
-/* FESTIVAL DATES */
+/* ambient particle field, continues gently for the whole page */
+const ambientField = document.getElementById('ambientField');
+function spawnAmbient(){
+  const e = document.createElement('div');
+  e.className = 'amb-particle';
+  const size = 2 + Math.random()*3;
+  e.style.width = size+'px';
+  e.style.height = size+'px';
+  e.style.left = Math.random()*100 + '%';
+  e.style.setProperty('--drift', (Math.random()*60-30)+'px');
+  e.style.animationDuration = (10 + Math.random()*8)+'s';
+  ambientField.appendChild(e);
+  setTimeout(()=> e.remove(), 19000);
+}
+for(let i=0;i<8;i++){ setTimeout(spawnAmbient, i*900); }
+setInterval(spawnAmbient, 1800);
 
-const mahaShivaratri =
-new Date("March 6, 2027 00:00:00").getTime();
-
-const pradosham =
-new Date("May 28, 2026 18:00:00").getTime();
-
-const amavasai =
-new Date("May 26, 2026 00:00:00").getTime();
-
-/* START */
-
-updateCountdown(
-"shivaratriTimer",
-mahaShivaratri
-);
-
-updateCountdown(
-"pradoshamTimer",
-pradosham
-);
-
-updateCountdown(
-"amavasaiTimer",
-amavasai
-);
-
+/* back-to-top visibility */
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', ()=>{
+  toTop.classList.toggle('show', window.scrollY > window.innerHeight * 0.8);
+});
 </script>
-
 </body>
 </html>
