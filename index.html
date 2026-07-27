@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
 <style>
 :root{
@@ -262,33 +263,36 @@ nav.rail *{pointer-events:auto;}
 .line-btn{border:1px solid var(--line); color:var(--smoke);}
 .line-btn:hover{border-color:var(--gold); color:var(--gold-bright);}
 
-/* HERO SIGNATURE VISUAL — 3D Shiva render */
+/* HERO SIGNATURE VISUAL — live 3D Shiva model */
+.shiva-hero-col{display:flex; flex-direction:column;}
 .shiva-hero-wrap{
   position:relative; min-height:460px;
   display:flex; align-items:center; justify-content:center;
-  perspective:1400px; padding:20px 0 30px;
+  padding:10px 0 20px;
 }
 .shiva-hero-glow{
   position:absolute; width:460px; height:460px; border-radius:50%;
   top:50%; left:50%; transform:translate(-50%,-50%);
   background:radial-gradient(circle, rgba(226,102,47,0.30), rgba(212,167,79,0.12) 45%, transparent 70%);
-  filter:blur(24px);
+  filter:blur(24px); z-index:0;
 }
-.shiva-hero-img{
-  position:relative; max-width:420px; width:100%; height:auto;
-  filter:drop-shadow(0 30px 60px rgba(0,0,0,0.6)) drop-shadow(0 0 50px rgba(212,167,79,0.25));
-  transform:rotateY(calc(var(--rot,0deg) + var(--tiltx,0deg))) rotateX(calc(4deg + var(--tilty,0deg)));
-  transition:transform 0.25s ease-out;
+model-viewer#shivaHero{
+  position:relative; z-index:1; width:100%; height:460px;
+  --poster-color:transparent;
   animation:shivaFloat 6s ease-in-out infinite;
 }
 @keyframes shivaFloat{
-  0%,100%{transform:translateY(0) rotateY(calc(var(--rot,0deg) + var(--tiltx,0deg))) rotateX(calc(4deg + var(--tilty,0deg)));}
-  50%{transform:translateY(-16px) rotateY(calc(var(--rot,0deg) + var(--tiltx,0deg))) rotateX(calc(4deg + var(--tilty,0deg)));}
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-14px);}
+}
+.hero-visual-hint{
+  position:relative; z-index:1; text-align:center; margin-top:-6px;
+  color:var(--ash); font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
 }
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;}
   .shiva-hero-wrap{min-height:320px; margin-top:30px;}
-  .shiva-hero-img{max-width:300px;}
+  model-viewer#shivaHero{height:320px;}
 }
 
 /* ============ SCROLL REVEAL ============ */
@@ -473,9 +477,25 @@ footer span{color:var(--gold-bright);}
         <a href="#pooja" class="btn line-btn">Pooja Timings</a>
       </div>
     </div>
-    <div class="shiva-hero-wrap">
-      <div class="shiva-hero-glow"></div>
-      <img src="shivan-3d.png" alt="Lord Shiva 3D render" class="shiva-hero-img" id="shivaHero">
+    <div class="shiva-hero-col">
+      <div class="shiva-hero-wrap">
+        <div class="shiva-hero-glow"></div>
+        <model-viewer
+          id="shivaHero"
+          src="shivan-3d.glb"
+          alt="Lord Shiva 3D model"
+          camera-controls
+          auto-rotate
+          auto-rotate-delay="0"
+          rotation-per-second="16deg"
+          interaction-prompt="none"
+          shadow-intensity="1"
+          exposure="1.05"
+          disable-zoom
+          camera-orbit="0deg 75deg 105%">
+        </model-viewer>
+      </div>
+      <p class="hero-visual-hint">Drag to view Lord Shiva from every angle</p>
     </div>
   </div>
 </header>
@@ -695,13 +715,6 @@ const revealObs = new IntersectionObserver((entries)=>{
 }, { threshold:0.15, rootMargin:"0px 0px -8% 0px" });
 revealTargets.forEach(el=> revealObs.observe(el));
 
-/* scroll-linked shiva image tilt */
-const shivaHero = document.getElementById('shivaHero');
-window.addEventListener('scroll', ()=>{
-  const rot = Math.min(14, window.scrollY / 50);
-  shivaHero.style.setProperty('--rot', rot + 'deg');
-});
-
 /* breadcrumb active state */
 const sections = document.querySelectorAll('section[id], header.hero');
 const dots = document.querySelectorAll('.rail-dots li');
@@ -748,22 +761,6 @@ if(window.matchMedia('(pointer:fine)').matches){
     glow.style.top = e.clientY + 'px';
   });
   document.addEventListener('mouseleave', ()=> glow.style.opacity = '0');
-
-  /* shiva hero image parallax tilt, layered on top of the scroll rotation */
-  const shivaWrap = document.querySelector('.shiva-hero-wrap');
-  if(shivaWrap){
-    shivaWrap.addEventListener('mousemove', (e)=>{
-      const r = shivaWrap.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      shivaHero.style.setProperty('--tiltx', (px*12) + 'deg');
-      shivaHero.style.setProperty('--tilty', (py*-8) + 'deg');
-    });
-    shivaWrap.addEventListener('mouseleave', ()=>{
-      shivaHero.style.setProperty('--tiltx','0deg');
-      shivaHero.style.setProperty('--tilty','0deg');
-    });
-  }
 
   /* magnetic buttons */
   document.querySelectorAll('.btn').forEach(btn=>{
