@@ -352,10 +352,21 @@ section{padding:130px 8%;}
 .festival-left p{color:var(--ash); margin-top:8px; font-size:15px;}
 .live-timer{font-family:'Big Shoulders Display'; font-size:38px; color:var(--smoke); text-align:right;}
 
+/* GALLERY FILTERS */
+.gallery-filters{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:40px;}
+.filter-pill{
+  padding:10px 22px; border-radius:30px; border:1px solid var(--line);
+  background:transparent; color:var(--ash); font-family:'Inter'; font-size:13px;
+  letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; transition:0.3s;
+}
+.filter-pill:hover{border-color:rgba(212,167,79,0.4); color:var(--smoke);}
+.filter-pill.active{background:var(--gold); border-color:var(--gold); color:#0a0806; font-weight:600;}
+.gallery-item.hidden{display:none;}
+
 /* GALLERY */
 .gallery{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; perspective:1000px;}
 .gallery-item{
-  position:relative; overflow:hidden; border-radius:4px; height:400px;
+  position:relative; overflow:hidden; border-radius:4px; height:400px; cursor:pointer;
   transform:rotateX(var(--ry,0deg)) rotateY(var(--rx,0deg));
   transition:transform 0.25s ease-out;
 }
@@ -371,6 +382,48 @@ section{padding:130px 8%;}
   transform:skewX(-20deg); transition:left 0.9s ease;
 }
 .gallery-item:hover::before{left:130%;}
+
+/* LIGHTBOX */
+.lightbox{
+  position:fixed; inset:0; z-index:5000; display:none;
+  align-items:center; justify-content:center;
+  background:rgba(4,3,5,0.94); backdrop-filter:blur(6px);
+  opacity:0; transition:opacity 0.35s ease;
+}
+.lightbox.open{display:flex; opacity:1;}
+.lb-stage{
+  position:relative; max-width:min(86vw,900px); max-height:82vh;
+  display:flex; flex-direction:column; align-items:center;
+  transform:scale(0.94); transition:transform 0.35s ease;
+}
+.lightbox.open .lb-stage{transform:scale(1);}
+.lb-stage img{
+  max-width:100%; max-height:70vh; border-radius:4px; object-fit:contain;
+  box-shadow:0 40px 100px rgba(0,0,0,0.6);
+}
+.lb-caption{margin-top:20px; color:var(--smoke); font-size:15px; text-align:center; max-width:600px;}
+.lb-counter{margin-top:8px; color:var(--ash); font-size:12px; letter-spacing:0.12em; text-transform:uppercase;}
+.lb-close{
+  position:absolute; top:26px; right:26px; z-index:5001;
+  width:46px; height:46px; border-radius:50%; border:1px solid var(--line);
+  background:rgba(255,255,255,0.03); color:var(--smoke); font-size:18px;
+  cursor:pointer; transition:0.3s;
+}
+.lb-close:hover{border-color:var(--gold); color:var(--gold-bright);}
+.lb-nav{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:5001;
+  width:56px; height:56px; border-radius:50%; border:1px solid var(--line);
+  background:rgba(255,255,255,0.03); color:var(--smoke); font-size:30px; line-height:1;
+  cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center;
+}
+.lb-nav:hover{border-color:var(--gold); color:var(--gold-bright); background:rgba(212,167,79,0.08);}
+.lb-prev{left:24px;}
+.lb-next{right:24px;}
+@media(max-width:700px){
+  .lb-nav{width:44px; height:44px; font-size:24px;}
+  .lb-prev{left:10px;} .lb-next{right:10px;}
+  .lb-close{top:16px; right:16px;}
+}
 
 /* LEADERSHIP LINK BAND */
 .lead-band{
@@ -597,10 +650,22 @@ footer span{color:var(--gold-bright);}
     <h2 class="display">Temple <span>Gallery</span></h2>
     <p>The real atmosphere of Sri Shivan Alayam — light, smoke, flowers and devotion.</p>
   </div>
-  <div class="gallery">
-    <div class="gallery-item"><img src="shivan1.png" alt="Temple moment"></div>
-    <div class="gallery-item"><img src="shivan2.png" alt="Temple moment"></div>
-    <div class="gallery-item"><img src="shivan3.png" alt="Temple moment"></div>
+
+  <div class="gallery-filters">
+    <button class="filter-pill active" data-filter="all">All</button>
+    <button class="filter-pill" data-filter="pooja">Daily Pooja</button>
+    <button class="filter-pill" data-filter="festival">Festivals</button>
+    <button class="filter-pill" data-filter="architecture">Architecture</button>
+    <button class="filter-pill" data-filter="devotees">Devotees</button>
+  </div>
+
+  <div class="gallery" id="galleryGrid">
+    <div class="gallery-item" data-filter="pooja" data-caption="Morning abishegam at the sanctum"><img src="shivan1.png" alt="Morning abishegam"></div>
+    <div class="gallery-item" data-filter="festival" data-caption="Maha Shivaratri night celebrations"><img src="shivan2.png" alt="Maha Shivaratri celebrations"></div>
+    <div class="gallery-item" data-filter="architecture" data-caption="The temple gopuram at dusk"><img src="shivan3.png" alt="Temple gopuram at dusk"></div>
+    <div class="gallery-item" data-filter="devotees" data-caption="Devotees gathered for evening pooja"><img src="shivan4.png" alt="Devotees at evening pooja"></div>
+    <div class="gallery-item" data-filter="pooja" data-caption="Evening deeparathanai"><img src="shivan5.png" alt="Evening deeparathanai"></div>
+    <div class="gallery-item" data-filter="festival" data-caption="Pradosham prayers in progress"><img src="shivan6.png" alt="Pradosham prayers"></div>
   </div>
 </section>
 
@@ -653,6 +718,18 @@ footer span{color:var(--gold-bright);}
 <footer>
   <span>🕉 Om Namah Shivaya</span> · Sri Shivan Alayam Brickfields
 </footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <div class="lb-stage">
+    <img src="" alt="" id="lbImage">
+    <p class="lb-caption" id="lbCaption"></p>
+    <span class="lb-counter" id="lbCounter"></span>
+  </div>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+</div>
 
 <a href="https://wa.me/60123456789" class="whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
 <a href="#" class="to-top" id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">ॐ</a>
@@ -715,6 +792,80 @@ const revealObs = new IntersectionObserver((entries)=>{
 }, { threshold:0.15, rootMargin:"0px 0px -8% 0px" });
 revealTargets.forEach(el=> revealObs.observe(el));
 
+/* ============ GALLERY FILTERS ============ */
+const filterPills = document.querySelectorAll('.filter-pill');
+const galleryItems = document.querySelectorAll('#galleryGrid .gallery-item');
+filterPills.forEach(pill=>{
+  pill.addEventListener('click', ()=>{
+    filterPills.forEach(p=> p.classList.remove('active'));
+    pill.classList.add('active');
+    const f = pill.dataset.filter;
+    galleryItems.forEach(item=>{
+      const match = f === 'all' || item.dataset.filter === f;
+      item.classList.toggle('hidden', !match);
+    });
+  });
+});
+
+/* ============ LIGHTBOX ============ */
+const lightbox = document.getElementById('lightbox');
+const lbImage = document.getElementById('lbImage');
+const lbCaption = document.getElementById('lbCaption');
+const lbCounter = document.getElementById('lbCounter');
+let lbList = [];
+let lbIndex = 0;
+
+function visibleGalleryItems(){
+  return Array.from(galleryItems).filter(item=> !item.classList.contains('hidden'));
+}
+
+function openLightbox(index){
+  lbList = visibleGalleryItems();
+  lbIndex = index;
+  renderLightbox();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderLightbox(){
+  const item = lbList[lbIndex];
+  if(!item) return;
+  const img = item.querySelector('img');
+  lbImage.src = img.src;
+  lbImage.alt = img.alt;
+  lbCaption.textContent = item.dataset.caption || img.alt || '';
+  lbCounter.textContent = (lbIndex+1) + ' / ' + lbList.length;
+}
+
+function closeLightbox(){
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function lbStep(dir){
+  lbIndex = (lbIndex + dir + lbList.length) % lbList.length;
+  renderLightbox();
+}
+
+galleryItems.forEach(item=>{
+  item.addEventListener('click', ()=>{
+    const visible = visibleGalleryItems();
+    const idx = visible.indexOf(item);
+    openLightbox(idx < 0 ? 0 : idx);
+  });
+});
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', ()=> lbStep(-1));
+document.getElementById('lbNext').addEventListener('click', ()=> lbStep(1));
+lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e)=>{
+  if(!lightbox.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') lbStep(-1);
+  if(e.key === 'ArrowRight') lbStep(1);
+});
+
 /* breadcrumb active state */
 const sections = document.querySelectorAll('section[id], header.hero');
 const dots = document.querySelectorAll('.rail-dots li');
@@ -730,12 +881,49 @@ const obs = new IntersectionObserver((entries)=>{
 sections.forEach(s=>{ if(s.id) obs.observe(s); });
 
 /* live countdowns */
-function updateCountdown(id,targetDate){
+
+/**
+ * Pradosham and Amavasai are recurring lunar-calendar observances (twice
+ * and once a month respectively) — a single hardcoded date breaks the
+ * moment it passes, which is what happened before. Instead we keep a
+ * full list of known 2026 dates (sourced from Tamil panchangam data)
+ * and always count down to whichever one is soonest.
+ *
+ * NOTE: refresh these lists once a year (e.g. every December) with next
+ * year's panchangam dates. If the list ever runs out, the fallback below
+ * approximates future dates using the ~29.53-day synodic month so the
+ * countdown never gets stuck on "Festival Started" again.
+ */
+const SYNODIC_MONTH_MS = 29.53059 * 24 * 60 * 60 * 1000;
+
+function toTimestamps(dateStrings){
+  return dateStrings.map(s => new Date(s).getTime()).sort((a,b) => a - b);
+}
+
+function getNextOccurrence(sortedList, now){
+  for(const t of sortedList){
+    if(t > now) return t;
+  }
+  // Past the end of our known list — approximate forward using the
+  // average lunar month until we land on a future date.
+  let last = sortedList[sortedList.length - 1];
+  while(last <= now){
+    last += SYNODIC_MONTH_MS;
+  }
+  return last;
+}
+
+function updateCountdown(id, dateList){
   const timer = document.getElementById(id);
+  const sorted = toTimestamps(dateList);
+  let target = getNextOccurrence(sorted, Date.now());
+
   function calculate(){
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-    if(distance < 0){ timer.innerHTML = "Festival Started"; return; }
+    const now = Date.now();
+    if(now > target){
+      target = getNextOccurrence(sorted, now);
+    }
+    const distance = target - now;
     const days = Math.floor(distance / (1000*60*60*24));
     const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
     const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
@@ -745,12 +933,45 @@ function updateCountdown(id,targetDate){
   calculate();
   setInterval(calculate,1000);
 }
-const mahaShivaratri = new Date("March 6, 2027 00:00:00").getTime();
-const pradosham = new Date("May 28, 2026 18:00:00").getTime();
-const amavasai = new Date("May 26, 2026 00:00:00").getTime();
-updateCountdown("shivaratriTimer", mahaShivaratri);
-updateCountdown("pradoshamTimer", pradosham);
-updateCountdown("amavasaiTimer", amavasai);
+
+// Maha Shivaratri — one fixed annual date, confirmed for 2027.
+const mahaShivaratriDates = ["March 6, 2027 00:00:00"];
+
+// Pradosham 2026 — Trayodashi Tithi, twice per lunar month (source: Tamil panchangam).
+const pradoshamDates = [
+  "January 1, 2026 18:00:00", "January 16, 2026 18:00:00", "January 30, 2026 18:00:00",
+  "February 14, 2026 18:00:00",
+  "March 1, 2026 18:00:00", "March 16, 2026 18:00:00", "March 30, 2026 18:00:00",
+  "April 15, 2026 18:00:00", "April 29, 2026 18:00:00",
+  "May 14, 2026 18:00:00", "May 28, 2026 18:00:00",
+  "June 12, 2026 18:00:00", "June 27, 2026 18:00:00",
+  "July 12, 2026 18:00:00", "July 26, 2026 18:00:00",
+  "August 10, 2026 18:00:00", "August 25, 2026 18:00:00",
+  "September 8, 2026 18:00:00", "September 24, 2026 18:00:00",
+  "October 8, 2026 18:00:00", "October 23, 2026 18:00:00",
+  "November 6, 2026 18:00:00", "November 22, 2026 18:00:00",
+  "December 6, 2026 18:00:00", "December 21, 2026 18:00:00",
+];
+
+// Amavasai (new moon) 2026 — once per lunar month (source: Tamil panchangam).
+const amavasaiDates = [
+  "January 18, 2026 00:00:00",
+  "February 16, 2026 00:00:00",
+  "March 18, 2026 00:00:00",
+  "April 16, 2026 00:00:00",
+  "May 16, 2026 00:00:00",
+  "June 14, 2026 00:00:00",
+  "July 13, 2026 00:00:00",
+  "August 12, 2026 00:00:00",
+  "September 10, 2026 00:00:00",
+  "October 10, 2026 00:00:00",
+  "November 8, 2026 00:00:00",
+  "December 8, 2026 00:00:00",
+];
+
+updateCountdown("shivaratriTimer", mahaShivaratriDates);
+updateCountdown("pradoshamTimer", pradoshamDates);
+updateCountdown("amavasaiTimer", amavasaiDates);
 
 /* cursor glow, only on fine pointers */
 if(window.matchMedia('(pointer:fine)').matches){
