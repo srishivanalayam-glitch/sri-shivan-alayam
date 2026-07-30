@@ -87,46 +87,6 @@ body{
 }
 .door-lingam{width:92px; height:92px; --poster-color:transparent;}
 
-.door-corner{
-  position:absolute; width:60px; height:60px; border-radius:50%; z-index:2;
-  background:radial-gradient(circle, rgba(212,167,79,0.20), rgba(212,167,79,0.03) 55%, transparent 75%);
-  border:1px solid rgba(212,167,79,0.28);
-  box-shadow:inset 0 0 14px rgba(0,0,0,0.5), 0 0 16px rgba(212,167,79,0.12);
-  display:flex; align-items:center; justify-content:center;
-}
-.door-corner-lingam{width:42px; height:42px; --poster-color:transparent;}
-.door-corner.tl{top:38px; left:38px;}
-.door-corner.tr{top:38px; right:38px;}
-.door-corner.bl{bottom:38px; left:38px;}
-.door-corner.br{bottom:38px; right:38px;}
-
-/* Molding brackets — same single carved asset, mirrored per corner so it
-   reads as a matched framing set rather than 4 identical copies. */
-.door-molding-frame{
-  position:absolute; width:96px; height:96px; z-index:1; opacity:0.85;
-  filter:drop-shadow(0 3px 6px rgba(0,0,0,0.5));
-}
-.door-molding-frame model-viewer{width:100%; height:100%; --poster-color:transparent;}
-.door-molding-frame.tl{top:14px; left:14px; transform:rotate(0deg);}
-.door-molding-frame.tr{top:14px; right:14px; transform:scaleX(-1);}
-.door-molding-frame.bl{bottom:14px; left:14px; transform:scaleY(-1);}
-.door-molding-frame.br{bottom:14px; right:14px; transform:rotate(180deg);}
-@media(max-width:700px){
-  .door-molding-frame{width:64px; height:64px;}
-  .door-molding-frame.tl, .door-molding-frame.tr{top:8px;}
-  .door-molding-frame.bl, .door-molding-frame.br{bottom:8px;}
-  .door-molding-frame.tl, .door-molding-frame.bl{left:8px;}
-  .door-molding-frame.tr, .door-molding-frame.br{right:8px;}
-}
-
-@media(max-width:700px){
-  .door-corner{width:40px; height:40px;}
-  .door-corner-lingam{width:28px; height:28px;}
-  .door-corner.tl{top:20px; left:20px;}
-  .door-corner.tr{top:20px; right:20px;}
-  .door-corner.bl{bottom:20px; left:20px;}
-  .door-corner.br{bottom:20px; right:20px;}
-}
 .door::after{
   content:''; position:absolute; top:50%; width:16px; height:16px;
   border-radius:50%; background:radial-gradient(circle at 35% 35%, #f0c56f, #8a6321 70%);
@@ -555,50 +515,6 @@ footer span{color:var(--gold-bright);}
           camera-orbit="0deg 78deg 130%">
         </model-viewer>
       </div>
-      <div class="door-molding-frame tl">
-        <model-viewer src="door-molding.glb" alt="Carved molding bracket"
-          camera-controls="false" disable-zoom interaction-prompt="none"
-          exposure="1.05" shadow-intensity="0.3" camera-orbit="0deg 8deg 150%"></model-viewer>
-      </div>
-      <div class="door-molding-frame tr">
-        <model-viewer src="door-molding.glb" alt="Carved molding bracket"
-          camera-controls="false" disable-zoom interaction-prompt="none"
-          exposure="1.05" shadow-intensity="0.3" camera-orbit="0deg 8deg 150%"></model-viewer>
-      </div>
-      <div class="door-molding-frame bl">
-        <model-viewer src="door-molding.glb" alt="Carved molding bracket"
-          camera-controls="false" disable-zoom interaction-prompt="none"
-          exposure="1.05" shadow-intensity="0.3" camera-orbit="0deg 8deg 150%"></model-viewer>
-      </div>
-      <div class="door-molding-frame br">
-        <model-viewer src="door-molding.glb" alt="Carved molding bracket"
-          camera-controls="false" disable-zoom interaction-prompt="none"
-          exposure="1.05" shadow-intensity="0.3" camera-orbit="0deg 8deg 150%"></model-viewer>
-      </div>
-      <div class="door-corner tl">
-        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
-          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
-          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
-          camera-orbit="0deg 78deg 130%"></model-viewer>
-      </div>
-      <div class="door-corner tr">
-        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
-          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
-          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
-          camera-orbit="0deg 78deg 130%"></model-viewer>
-      </div>
-      <div class="door-corner bl">
-        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
-          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
-          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
-          camera-orbit="0deg 78deg 130%"></model-viewer>
-      </div>
-      <div class="door-corner br">
-        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
-          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
-          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
-          camera-orbit="0deg 78deg 130%"></model-viewer>
-      </div>
     </div>
     <div class="door right-door">
       <div class="door-niche">
@@ -616,50 +532,6 @@ footer span{color:var(--gold-bright);}
           shadow-intensity="0.6"
           camera-orbit="0deg 78deg 130%">
         </model-viewer>
-      </div>
-      <div class="door-molding-frame tl">
-        <model-viewer src="door-molding.glb" alt="Carved molding bracket"
-          camera-controls="false" disable-zoom interaction-prompt="none"
-          exposure="1.05" shadow-intensity="0.3" camera-orbit="0deg 8deg 150%"></model-viewer>
-      </div>
-      <div class="door-molding-frame tr">
-        <model-viewer src="door-molding.glb" alt="Carved molding bracket"
-          camera-controls="false" disable-zoom interaction-prompt="none"
-          exposure="1.05" shadow-intensity="0.3" camera-orbit="0deg 8deg 150%"></model-viewer>
-      </div>
-      <div class="door-molding-frame bl">
-        <model-viewer src="door-molding.glb" alt="Carved molding bracket"
-          camera-controls="false" disable-zoom interaction-prompt="none"
-          exposure="1.05" shadow-intensity="0.3" camera-orbit="0deg 8deg 150%"></model-viewer>
-      </div>
-      <div class="door-molding-frame br">
-        <model-viewer src="door-molding.glb" alt="Carved molding bracket"
-          camera-controls="false" disable-zoom interaction-prompt="none"
-          exposure="1.05" shadow-intensity="0.3" camera-orbit="0deg 8deg 150%"></model-viewer>
-      </div>
-      <div class="door-corner tl">
-        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
-          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
-          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
-          camera-orbit="0deg 78deg 130%"></model-viewer>
-      </div>
-      <div class="door-corner tr">
-        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
-          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
-          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
-          camera-orbit="0deg 78deg 130%"></model-viewer>
-      </div>
-      <div class="door-corner bl">
-        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
-          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
-          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
-          camera-orbit="0deg 78deg 130%"></model-viewer>
-      </div>
-      <div class="door-corner br">
-        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
-          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
-          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
-          camera-orbit="0deg 78deg 130%"></model-viewer>
       </div>
     </div>
   </div>
@@ -893,9 +765,6 @@ footer span{color:var(--gold-bright);}
     Shiva Lingam 3D model by <a href="https://sketchfab.com/logeshrethinam" target="_blank" rel="noopener" style="color:inherit;">logesh1</a>,
     licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:inherit;">CC BY 4.0</a>
     via <a href="https://sketchfab.com/3d-models/shiva-lingam-30982e17fe9b4388bad229171b072633" target="_blank" rel="noopener" style="color:inherit;">Sketchfab</a>
-    · Door molding overlay by <a href="https://sketchfab.com/Stavros-manufacturing" target="_blank" rel="noopener" style="color:inherit;">Stavros-manufacturing</a>,
-    licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:inherit;">CC BY 4.0</a>
-    via <a href="https://sketchfab.com/3d-models/stavros-overlay-for-molding-aff1957b623d44c08d04056e90d2074b" target="_blank" rel="noopener" style="color:inherit;">Sketchfab</a>
   </div>
 </footer>
 
