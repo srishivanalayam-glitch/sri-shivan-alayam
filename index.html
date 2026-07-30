@@ -86,6 +86,37 @@ body{
   display:flex; align-items:center; justify-content:center;
 }
 .door-lingam{width:92px; height:92px; --poster-color:transparent;}
+
+.door-corner{
+  position:absolute; width:60px; height:60px; border-radius:50%;
+  background:radial-gradient(circle, rgba(212,167,79,0.20), rgba(212,167,79,0.03) 55%, transparent 75%);
+  border:1px solid rgba(212,167,79,0.28);
+  box-shadow:inset 0 0 14px rgba(0,0,0,0.5), 0 0 16px rgba(212,167,79,0.12);
+  display:flex; align-items:center; justify-content:center;
+}
+.door-corner-lingam{width:42px; height:42px; --poster-color:transparent;}
+.door-corner.tl{top:38px; left:38px;}
+.door-corner.tr{top:38px; right:38px;}
+.door-corner.bl{bottom:38px; left:38px;}
+.door-corner.br{bottom:38px; right:38px;}
+
+.door-molding{
+  position:absolute; top:22px; left:50%; transform:translateX(-50%);
+  width:calc(100% - 90px); height:64px;
+  opacity:0.9; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+.door-molding model-viewer{width:100%; height:100%; --poster-color:transparent;}
+@media(max-width:700px){
+  .door-molding{height:40px; top:14px;}
+}
+@media(max-width:700px){
+  .door-corner{width:40px; height:40px;}
+  .door-corner-lingam{width:28px; height:28px;}
+  .door-corner.tl{top:20px; left:20px;}
+  .door-corner.tr{top:20px; right:20px;}
+  .door-corner.bl{bottom:20px; left:20px;}
+  .door-corner.br{bottom:20px; right:20px;}
+}
 .door::after{
   content:''; position:absolute; top:50%; width:16px; height:16px;
   border-radius:50%; background:radial-gradient(circle at 35% 35%, #f0c56f, #8a6321 70%);
@@ -498,6 +529,18 @@ footer span{color:var(--gold-bright);}
 <div id="templeEntrance">
   <div class="door-scene">
     <div class="door left-door">
+      <div class="door-molding">
+        <model-viewer
+          src="door-molding.glb"
+          alt="Carved molding overlay"
+          camera-controls="false"
+          disable-zoom
+          interaction-prompt="none"
+          exposure="1.05"
+          shadow-intensity="0.3"
+          camera-orbit="0deg 8deg 150%">
+        </model-viewer>
+      </div>
       <div class="door-niche">
         <model-viewer
           class="door-lingam"
@@ -514,8 +557,44 @@ footer span{color:var(--gold-bright);}
           camera-orbit="0deg 78deg 130%">
         </model-viewer>
       </div>
+      <div class="door-corner tl">
+        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
+          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
+          camera-orbit="0deg 78deg 130%"></model-viewer>
+      </div>
+      <div class="door-corner tr">
+        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
+          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
+          camera-orbit="0deg 78deg 130%"></model-viewer>
+      </div>
+      <div class="door-corner bl">
+        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
+          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
+          camera-orbit="0deg 78deg 130%"></model-viewer>
+      </div>
+      <div class="door-corner br">
+        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
+          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
+          camera-orbit="0deg 78deg 130%"></model-viewer>
+      </div>
     </div>
     <div class="door right-door">
+      <div class="door-molding">
+        <model-viewer
+          src="door-molding.glb"
+          alt="Carved molding overlay"
+          camera-controls="false"
+          disable-zoom
+          interaction-prompt="none"
+          exposure="1.05"
+          shadow-intensity="0.3"
+          camera-orbit="0deg 8deg 150%">
+        </model-viewer>
+      </div>
       <div class="door-niche">
         <model-viewer
           class="door-lingam"
@@ -531,6 +610,30 @@ footer span{color:var(--gold-bright);}
           shadow-intensity="0.6"
           camera-orbit="0deg 78deg 130%">
         </model-viewer>
+      </div>
+      <div class="door-corner tl">
+        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
+          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
+          camera-orbit="0deg 78deg 130%"></model-viewer>
+      </div>
+      <div class="door-corner tr">
+        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
+          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
+          camera-orbit="0deg 78deg 130%"></model-viewer>
+      </div>
+      <div class="door-corner bl">
+        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
+          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
+          camera-orbit="0deg 78deg 130%"></model-viewer>
+      </div>
+      <div class="door-corner br">
+        <model-viewer class="door-corner-lingam" src="shiva-lingam.glb" alt="Shiva Lingam carving"
+          auto-rotate auto-rotate-delay="0" rotation-per-second="9deg" camera-controls="false"
+          disable-zoom interaction-prompt="none" exposure="1.1" shadow-intensity="0.5"
+          camera-orbit="0deg 78deg 130%"></model-viewer>
       </div>
     </div>
   </div>
@@ -764,6 +867,9 @@ footer span{color:var(--gold-bright);}
     Shiva Lingam 3D model by <a href="https://sketchfab.com/logeshrethinam" target="_blank" rel="noopener" style="color:inherit;">logesh1</a>,
     licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:inherit;">CC BY 4.0</a>
     via <a href="https://sketchfab.com/3d-models/shiva-lingam-30982e17fe9b4388bad229171b072633" target="_blank" rel="noopener" style="color:inherit;">Sketchfab</a>
+    · Door molding overlay by <a href="https://sketchfab.com/Stavros-manufacturing" target="_blank" rel="noopener" style="color:inherit;">Stavros-manufacturing</a>,
+    licensed <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:inherit;">CC BY 4.0</a>
+    via <a href="https://sketchfab.com/3d-models/stavros-overlay-for-molding-aff1957b623d44c08d04056e90d2074b" target="_blank" rel="noopener" style="color:inherit;">Sketchfab</a>
   </div>
 </footer>
 
