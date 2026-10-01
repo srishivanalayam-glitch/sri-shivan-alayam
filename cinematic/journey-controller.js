@@ -1,0 +1,18 @@
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const scenes=[...document.querySelectorAll('.scene')],ids=['space','clouds','temple','enter','sanctum','explore'],titles=['From the universe','Through divine clouds','Revealed in golden light','The doors open','The sacred sanctum','A place for every soul'];
+let current=0,playing=false,elapsed=0,last=performance.now(),lock=0;
+const play=document.querySelector('#play'),progress=document.querySelector('.scene-progress span');
+function stop(){playing=false;play.textContent='Play journey';play.setAttribute('aria-label','Play journey');}
+function show(n){current=Math.max(0,Math.min(5,n));elapsed=0;scenes.forEach((s,i)=>{s.classList.toggle('active',i===current);s.inert=i!==current;s.setAttribute('aria-hidden',String(i!==current));});document.body.classList.toggle('at-end',current===5);document.querySelector('.explore').inert=current!==5;document.querySelector('#scene-label').textContent=`0${current+1} / 06 · ${titles[current]}`;document.querySelector('#previous').disabled=current===0;document.querySelector('#next').disabled=current===5;document.querySelectorAll('.stages a').forEach((a,i)=>{if(i===current)a.setAttribute('aria-current','step');else a.removeAttribute('aria-current');});history.replaceState(null,'',`#${ids[current]}`);if(current===5)stop();}
+function start(){if(current===5)show(0);playing=true;document.documentElement.classList.remove('paused');play.textContent='Pause journey';play.setAttribute('aria-label','Pause journey');}
+play.onclick=()=>{if(playing){stop();document.documentElement.classList.add('paused');}else start();};
+document.querySelector('#next').onclick=()=>{stop();show(current+1);};document.querySelector('#previous').onclick=()=>{stop();show(current-1);};
+document.querySelectorAll('a[href^="#"]:not([data-info]):not(.skip)').forEach(a=>a.addEventListener('click',e=>{const i=ids.indexOf(a.hash.slice(1));if(i<0)return;e.preventDefault();show(i);if(a.closest('.hero-copy')&&!reduced.matches)start();}));
+document.querySelector('.skip').onclick=e=>{e.preventDefault();stop();show(5);document.querySelector('.explore a').focus();};
+document.addEventListener('keydown',e=>{if(dialog.open||e.target.closest('button,a'))return;if(['ArrowDown','ArrowRight','PageDown','ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();stop();show(current+(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)?-1:1));}});
+addEventListener('wheel',e=>{if(dialog.open||Math.abs(e.deltaY)<25||performance.now()<lock||e.target.closest('nav'))return;lock=performance.now()+1700;stop();show(current+(e.deltaY>0?1:-1));},{passive:true});
+let touchY=null;addEventListener('touchstart',e=>{touchY=e.target.closest('button,a,dialog,nav')?null:e.touches[0].clientY;},{passive:true});addEventListener('touchend',e=>{if(touchY===null||dialog.open)return;const delta=touchY-e.changedTouches[0].clientY;touchY=null;if(Math.abs(delta)>55){stop();show(current+(delta>0?1:-1));}},{passive:true});
+for(const [index,s]of scenes.entries()){const layer=document.createElement('div');layer.className='atmosphere';layer.setAttribute('aria-hidden','true');for(let i=0;i<(index===0?14:26);i++){const p=document.createElement('span');p.className='mote';p.style.cssText=`--x:${(i*37)%100}%;--duration:${12+(i%8)}s;--delay:-${i*.91}s`;layer.append(p);}s.append(layer);}
+function tick(now){if(playing&&!document.hidden&&!dialog.open){elapsed+=Math.min(now-last,100);if(elapsed>=10000)show(current+1);}last=now;progress.style.width=`${(current+elapsed/10000)/6*100}%`;requestAnimationFrame(tick);}requestAnimationFrame(tick);
+reduced.onchange=()=>{if(reduced.matches)stop();};
+const initial=ids.indexOf(location.hash.slice(1));show(initial<0?0:initial);
