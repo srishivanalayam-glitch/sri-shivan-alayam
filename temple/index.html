@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080b10"><title>Divine Space · Sri Shivan Alayam</title>
+<link rel="icon" href="data:,"><link rel="stylesheet" href="temple.css">
+<script type="importmap">{"imports":{"three":"./vendor/build/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body><main id="experience">
+<div id="canvas" aria-label="Interactive Shiva temple. Drag to look around and use the location buttons to move."></div>
+<header><a href="../index.html" class="back">← Temple website</a><div class="brand">ॐ <span>SRI SHIVAN ALAYAM<small>A SACRED JOURNEY</small></span></div><button id="quality" aria-label="Toggle graphics quality">Quality: auto</button></header>
+<section id="welcome" class="overlay"><div><p class="eyebrow">BRICKFIELDS · KUALA LUMPUR</p><h1>A moment<br>of stillness.</h1><p>Step through the gopuram. Follow the light<br>towards the sacred Shiva sanctum.</p><button id="enter" class="primary" disabled>Enter the divine space <span>→</span></button><p class="hint">An original architectural interpretation</p></div></section>
+<section id="loading" class="overlay" hidden aria-live="polite"><div><div class="om">ॐ</div><h2>SRI SHIVAN ALAYAM</h2><p>ENTERING THE DIVINE SPACE...</p><progress id="progress" max="100" value="0"></progress><p id="percentage">0%</p></div></section>
+<section id="fallback" class="overlay" hidden role="alert"><div><div class="om">ॐ</div><h2>A quiet moment, still here.</h2><p id="error-message">The 3D experience could not load on this device.</p><a class="primary" href="../index.html">Continue to the temple website →</a><button onclick="location.reload()">Try again</button></div></section>
+<div id="tour-ui" hidden><aside><p class="eyebrow" id="step">01 / 06</p><h2 id="place">The gopuram</h2><p id="description">A threshold between the everyday and the sacred.</p></aside><footer>
+<div class="journey"><p id="journey-status" role="status" aria-live="polite">Arrived: Entrance</p><button id="skip-movement" hidden>Skip movement</button></div>
+<p class="instruction">Drag to look · Choose a place to walk · Escape to pause</p><nav id="locations" aria-label="Temple locations"></nav><div class="tour-actions"><button id="previous">← Previous</button><button id="guided" aria-pressed="false">Guided tour</button><button id="next">Continue →</button></div>
+<div class="view-actions"><button id="overview">Temple overview</button><button id="motion" aria-pressed="false">Motion: smooth</button></div>
+</footer></div>
+<noscript><p class="nojs">JavaScript is required for the 3D tour. <a href="../index.html">Visit the temple website</a>.</p></noscript>
+</main><script type="module" src="boot.js"></script></body></html>

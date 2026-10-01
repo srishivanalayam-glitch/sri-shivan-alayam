@@ -1,0 +1,21 @@
+Sri Shivan Alayam cinematic homepage
+
+Six backgrounds generated with OpenAI image generation using the user's supplied reference image. They are artistic interpretations, not photographs of the actual temple. The existing interactive 3D model remains separately available at /temple/.
+
+Art direction used for every scene: Use the supplied screenshot only as visual reference. Create an exceptionally photorealistic cinematic wide landscape website background, 16:9. No text, letters, logos, UI, buttons, borders, watermarks, collage or panels. Match amber-gold, charcoal and sacred Tamil Shiva visual identity, intricate details and cinematic realism.
+
+Scene prompt descriptions:
+earth.webp: Earth seen from orbit, realistic India on the right with golden city lights, curved blue atmosphere, sun at the upper-right horizon, clouds and stars. Dark space on the left for text. No temple.
+clouds.webp: A gigantic intricately detailed Dravidian gopuram center-right emerging from billowing clouds at sunrise. Smaller towers, amber rays and birds. Dark left third. Weathered stone with thousands of sculptural details.
+temple.webp: Frontal symmetric ground-level ornate Tamil Shiva temple at sunset, central gopuram, smaller vimanas, flagpole, stone courtyard, lamps, palms and carvings. Darker left quarter. No foreground people.
+doors.webp: Monumental carved brass and gold double doors opening inward to golden light, sculptured pillars, lamps and petals. A small male devotee seen from behind in an ivory dhoti at the threshold. Dark sides.
+sanctum.webp: Dark granite sanctuary, smooth black Shiva Lingam with three white ash lines and red kumkum, an ornate circular Avudaiyar and spout, flowers, brass lamps, carved pillars, warm overhead light, incense and petals. Eye-level perspective, dark side spaces. No people or anthropomorphic deity.
+nandi.webp: A dark carved stone Nandi with brass ornaments in the left third, detailed head, shoulder and collar. Temple gopuram and palms at right at sunset. Central space for text. Realistic stone texture.
+
+Source images were converted to WebP at quality 88 for web delivery. All six scene images together are approximately 2 MB. Native HTML text, navigation and buttons are layered over the artwork; imagery is not an interactive 3D environment.
+
+Run locally from the website folder:
+python -m http.server 8000 --bind 127.0.0.1
+Then open http://127.0.0.1:8000/
+
+The prior homepage is preserved as community.html. Donation and broadcast panels do not invent payment details or a live stream. The intro is an automated scroll through the scenes, with stop and reduced-motion support.
