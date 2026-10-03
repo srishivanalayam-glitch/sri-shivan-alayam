@@ -7,7 +7,7 @@ const titles=['Beyond the horizon','Through the clouds','The sacred approach','A
 const play=document.querySelector('#play'),bar=document.querySelector('.scene-progress span');
 let current=0,playing=false,motion=!reduced.matches,wheelUntil=0,fallbackTimer;const fallback=new Set();
 const videos=scenes.map((scene,i)=>{
- const video=document.createElement('video');video.className='scene-video';video.muted=true;video.defaultMuted=true;video.playsInline=true;video.preload=i===0?'auto':'none';video.poster=`${mediaRoot(i)}/${files[i]}-poster.jpg`;let failedSources=0;for(const [extension,type] of [['webm','video/webm'],['mp4','video/mp4']]){const source=document.createElement('source');source.src=`${mediaRoot(i)}/${files[i]}.${extension}`;source.type=type;source.addEventListener('error',()=>{if(++failedSources===2){scene.classList.remove('video-ready');fallback.add(i);if(i===current)resumeFallback();}});video.append(source);}video.setAttribute('aria-hidden','true');video.playbackRate=.75;
+ const video=document.createElement('video');video.className='scene-video';video.muted=true;video.defaultMuted=true;video.playsInline=true;video.setAttribute('playsinline','');video.setAttribute('webkit-playsinline','');video.setAttribute('muted','');video.preload=i===0?'auto':'none';video.poster=`${mediaRoot(i)}/${files[i]}-poster.jpg`;let failedSources=0;for(const [extension,type] of [['mp4','video/mp4'],['webm','video/webm']]){const source=document.createElement('source');source.src=`${mediaRoot(i)}/${files[i]}.${extension}`;source.type=type;source.addEventListener('error',()=>{if(++failedSources===2){scene.classList.remove('video-ready');fallback.add(i);if(i===current)resumeFallback();}});video.append(source);}video.setAttribute('aria-hidden','true');video.playbackRate=.75;
  function revealFrame(){if(video.readyState>=2&&video.videoWidth>0)scene.classList.add('video-ready');}
  video.addEventListener('playing',()=>{if(video.requestVideoFrameCallback)video.requestVideoFrameCallback(revealFrame);else revealFrame();});
  video.addEventListener('emptied',()=>scene.classList.remove('video-ready'));
@@ -16,9 +16,16 @@ const videos=scenes.map((scene,i)=>{
  video.addEventListener('timeupdate',()=>{if(i===current)bar.style.width=`${(current+(video.duration?video.currentTime/video.duration:0))/6*100}%`;});
  scene.prepend(video);return video;
 });
-function resumeFallback(){clearTimeout(fallbackTimer);if(!motion||document.hidden||dialog.open)return;const img=scenes[current].querySelector(':scope > img');img.src=`${mediaRoot(current)}/${files[current]}.webp`;if(playing)fallbackTimer=setTimeout(()=>{if(current<5)show(current+1);else stop();},5444);}
-function stop(){clearTimeout(fallbackTimer);if(fallback.has(current))scenes[current].querySelector(':scope > img').src=`${mediaRoot(current)}/${files[current]}-poster.jpg`;playing=false;motion=false;videos.forEach(v=>v.pause());play.textContent='Play';play.setAttribute('aria-label','Play journey');}
-function resumeVideo(){if(document.hidden||dialog.open||!motion)return;if(fallback.has(current)){resumeFallback();return;}const v=videos[current];if(v.ended)v.currentTime=0;v.play().catch(error=>{if(v!==videos[current])return;scenes[current].classList.remove('video-ready');if(error.name==='NotSupportedError'||v.error){fallback.add(current);resumeFallback();return;}playing=false;play.textContent='Play';play.setAttribute('aria-label','Play journey');});}
+function resumeFallback(){
+ clearTimeout(fallbackTimer);if(!motion||document.hidden||dialog.open)return;
+ const index=current,scene=scenes[index],img=scene.querySelector(':scope > img');
+ scene.classList.remove('video-ready');videos[index].pause();
+ img.onload=()=>{if(index!==current||!motion||document.hidden||dialog.open)return;clearTimeout(fallbackTimer);if(playing)fallbackTimer=setTimeout(()=>{if(index!==current)return;if(current<5)show(current+1);else stop();},5444);};
+ img.src=`${mediaRoot(index)}/${files[index]}.webp`;
+}
+
+function stop(){clearTimeout(fallbackTimer);scenes.forEach(s=>{s.querySelector(':scope > img').onload=null;});if(fallback.has(current))scenes[current].querySelector(':scope > img').src=`${mediaRoot(current)}/${files[current]}-poster.jpg`;playing=false;motion=false;videos.forEach(v=>v.pause());play.textContent='Play';play.setAttribute('aria-label','Play journey');}
+function resumeVideo(){if(document.hidden||dialog.open||!motion)return;if(fallback.has(current)){resumeFallback();return;}const v=videos[current];if(v.ended)v.currentTime=0;v.play().catch(error=>{if(v!==videos[current]||error.name==='AbortError'||!motion)return;scenes[current].classList.remove('video-ready');if(error.name==='NotAllowedError'||error.name==='NotSupportedError'||v.error){fallback.add(current);resumeFallback();return;}playing=false;play.textContent='Play';play.setAttribute('aria-label','Play journey');});}
 function show(n){
  clearTimeout(fallbackTimer);videos.forEach(v=>v.pause());current=Math.max(0,Math.min(5,n));
  scenes.forEach((s,i)=>{s.classList.toggle('active',i===current);s.inert=i!==current;s.setAttribute('aria-hidden',String(i!==current));});
